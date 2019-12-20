@@ -1,0 +1,16 @@
+﻿.centered {
+    margin-top: 35px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.sport {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100px;
+    width: 100px;
+    margin-right: 35px;
+}
