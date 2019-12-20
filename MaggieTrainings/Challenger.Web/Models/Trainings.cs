@@ -1,9 +1,9 @@
 ﻿using LiteDB;
 using System;
 
-namespace Challenger.Web.Models
+namespace MaggieTrainings.Web.Models
 {
-    public class MaggieTrainings
+    public class Trainings
     {
         [BsonId]
         public int ObjectId { get; set; }

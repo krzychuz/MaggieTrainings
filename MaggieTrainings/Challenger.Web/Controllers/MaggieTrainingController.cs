@@ -1,12 +1,12 @@
-﻿using Challenger.Web.Models;
-using Challenger.Web.TrainingRest;
+﻿using MaggieTrainings.Web.Models;
+using MaggieTrainings.Web.TrainingRest;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Challenger.Web.Controllers
+namespace MaggieTrainings.Web.Controllers
 {
     public class MaggieTrainingController : Controller
     {
@@ -19,7 +19,7 @@ namespace Challenger.Web.Controllers
 
         public async Task<IActionResult> GetTrainingData()
         {
-            MaggieTrainings maggiTrainings = await maggieTrainingRestClient.GetTrainingData();
+            Trainings maggiTrainings = await maggieTrainingRestClient.GetTrainingData();
             return Ok(maggiTrainings);
         }
 

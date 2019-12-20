@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Challenger.Web.Models;
+using MaggieTrainings.Web.Models;
 
-namespace Challenger.Web.TrainingRest
+namespace MaggieTrainings.Web.TrainingRest
 {
     public interface IMaggieTrainingRestClient
     {
-        Task<MaggieTrainings> GetTrainingData();
+        Task<Trainings> GetTrainingData();
 
         Task IncreaseTrainingNumber();
 

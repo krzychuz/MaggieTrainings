@@ -1,11 +1,11 @@
-﻿using Challenger.Web.Models;
+﻿using MaggieTrainings.Web.Models;
 using LiteDB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Challenger.Web.TrainingRest
+namespace MaggieTrainings.Web.TrainingRest
 {
     public class MaggieTrainingRestClient : IMaggieTrainingRestClient
     {
@@ -15,19 +15,19 @@ namespace Challenger.Web.TrainingRest
             {
                 using (var db = new LiteDatabase(@"C:\Temp\MaggieTrainingData.db"))
                 {
-                    var col = db.GetCollection<MaggieTrainings>(nameof(MaggieTrainings));
+                    var col = db.GetCollection<Trainings>(nameof(MaggieTrainings));
                     var maggieTrainings = col.FindAll().FirstOrDefault();
                     if (maggieTrainings == null)
-                        col.Insert(GetNewMaggieTrainings());
+                        col.Insert(CreateNewTrainings());
                     else
-                        col.Update(GetNewMaggieTrainings());
+                        col.Update(CreateNewTrainings());
                 }
             });
         }
 
-        private MaggieTrainings GetNewMaggieTrainings()
+        private Trainings CreateNewTrainings()
         {
-            return new MaggieTrainings
+            return new Trainings
             {
                 IsYearlyGoalAchieved = false,
                 NumberOfTrainings = 0,
@@ -36,15 +36,15 @@ namespace Challenger.Web.TrainingRest
         }
     
 
-        public async Task<MaggieTrainings> GetTrainingData()
+        public async Task<Trainings> GetTrainingData()
         {
-            MaggieTrainings maggieTrainings = null;
+            Trainings maggieTrainings = null;
 
             await Task.Run(() =>
             {
                 using (var db = new LiteDatabase(@"C:\Temp\MaggieTrainingData.db"))
                 {
-                    var col = db.GetCollection<MaggieTrainings>(nameof(MaggieTrainings));
+                    var col = db.GetCollection<Trainings>(nameof(MaggieTrainings));
                     maggieTrainings = col.FindAll().FirstOrDefault();
                 }
             });
@@ -58,7 +58,7 @@ namespace Challenger.Web.TrainingRest
             {
                 using (var db = new LiteDatabase(@"C:\Temp\MaggieTrainingData.db"))
                 {
-                    var col = db.GetCollection<MaggieTrainings>(nameof(MaggieTrainings));
+                    var col = db.GetCollection<Trainings>(nameof(MaggieTrainings));
                     var maggieTrainings = col.FindAll().FirstOrDefault();
                     if (maggieTrainings == null)
                         throw new Exception("Could not retreive training database!");

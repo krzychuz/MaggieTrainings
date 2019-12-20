@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Challenger.Web
+namespace MaggieTrainings.Web
 {
   public class Program
   {
