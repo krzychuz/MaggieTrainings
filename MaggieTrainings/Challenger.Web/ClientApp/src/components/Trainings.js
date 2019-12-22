@@ -10,7 +10,7 @@ export class Trainings extends PureComponent {
         super(props);
         this.state = { trainingData: [], loading: true };
 
-        fetch('MaggieTraining/GetTrainingData')
+        fetch('MaggieTraining/GetDashboardData')
             .then(response => response.json())
             .then(data => {
                 this.setState({ trainingData: data, loading: false });
@@ -19,7 +19,7 @@ export class Trainings extends PureComponent {
     }
 
     handleClick() {
-        fetch('MaggieTraining/IncreaseTrainingNumber')
+        fetch('MaggieTraining/AddTraining')
             .then(window.location.reload());
     }
 
@@ -39,7 +39,7 @@ export class Trainings extends PureComponent {
                         />
                     </Grid.Col>
                     <Grid.Col>
-                        <Card title="Ostatni trening" body={this.state.trainingData.lastTrainingString} />
+                        <Card title="Ostatni trening" body={this.state.trainingData.lastTraining} />
                     </Grid.Col>
                 </Grid.Row>
                 &nbsp;

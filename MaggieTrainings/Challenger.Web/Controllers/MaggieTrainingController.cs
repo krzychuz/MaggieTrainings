@@ -17,20 +17,25 @@ namespace MaggieTrainings.Web.Controllers
             this.maggieTrainingRestClient = maggieTrainingRestClient;
         }
 
-        public async Task<IActionResult> GetTrainingData()
+        public async Task<IActionResult> GetDashboardData()
         {
-            Trainings maggiTrainings = await maggieTrainingRestClient.GetTrainingData();
-            return Ok(maggiTrainings);
+            DashboardData dashboardData = await maggieTrainingRestClient.GetDashboardData();
+            return Ok(dashboardData);
         }
 
-        public async Task IncreaseTrainingNumber()
+        public async Task AddTraining()
         {
-            await maggieTrainingRestClient.IncreaseTrainingNumber();
+            await maggieTrainingRestClient.AddTraining();
         }
 
         public async Task CreateTrainingDatabase()
         {
             await maggieTrainingRestClient.CreateTrainingDatabase();
+        }
+
+        public async Task ClearTrainingDatabase()
+        {
+            await maggieTrainingRestClient.ClearTrainingDatabase();
         }
     }
 }
