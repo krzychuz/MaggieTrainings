@@ -8,35 +8,35 @@ using System.Threading.Tasks;
 
 namespace MaggieTrainings.Web.DataRespository
 {
-    public class TrainingRepository : ITrainingRepository
+    public class TrainingRepository : ITrainingRepository, IDisposable
     {
-        IHostingEnvironment _hostingEnvironment;
+        private readonly IHostingEnvironment environment;
+        private readonly LiteDatabase dB;
+        private readonly LiteCollection<Training> trainingsCollection;
 
         public TrainingRepository(IHostingEnvironment hostingEnvironment)
         {
-            _hostingEnvironment = hostingEnvironment;
+            environment = hostingEnvironment;
+            dB = new LiteDatabase(GetLiteDbPath());
+            trainingsCollection = dB.GetCollection<Training>(nameof(Training));
         }
 
         private string GetLiteDbPath()
         {
-            return _hostingEnvironment.ContentRootPath + "\\MaggieTrainings.db";
+            return environment.ContentRootPath + "\\MaggieTrainings.db";
         }
 
         public async Task InitalizeRepository()
         {
             await Task.Run(() =>
             {
-                using (var db = new LiteDatabase(GetLiteDbPath()))
+                try
                 {
-                    try
-                    {
-                        var trainingsCollection = db.GetCollection<Training>(nameof(Training));
-                    }
-                    catch(Exception e)
-                    {
-                        throw new TrainingRepositoryException($"Could not initialize training repository! " +
-                            "Details: " + e.ToString());
-                    }
+                    dB.GetCollection<Training>(nameof(Training));
+                }
+                catch(Exception e)
+                {
+                    throw new TrainingRepositoryException($"Could not initialize training repository! Details: " + e.ToString());
                 }
             });
         }
@@ -45,23 +45,19 @@ namespace MaggieTrainings.Web.DataRespository
         {
             await Task.Run(() =>
             {
-                using (var db = new LiteDatabase(GetLiteDbPath()))
-                {
-                    var trainingsCollection = db.GetCollection<Training>(nameof(Training));
-                    var allTrainings = trainingsCollection.FindAll();
+                var allTrainings = trainingsCollection.FindAll();
 
-                    try
+                try
+                {
+                    foreach (var training in allTrainings)
                     {
-                        foreach (var training in allTrainings)
-                        {
-                            trainingsCollection?.Delete(training.Id);
-                        }
+                        trainingsCollection?.Delete(training.Id);
                     }
-                    catch (Exception e)
-                    {
-                        throw new TrainingRepositoryException($"Delete all records failed. Not possible to delete some of records! " +
-                            "Details: " + e.ToString());
-                    }
+                }
+                catch (Exception e)
+                {
+                    throw new TrainingRepositoryException($"Delete all records failed. Not possible to delete some of records! " +
+                        "Details: " + e.ToString());
                 }
             });
         }
@@ -70,17 +66,13 @@ namespace MaggieTrainings.Web.DataRespository
         {
             await Task.Run(() =>
             {
-                using (var db = new LiteDatabase(GetLiteDbPath()))
+                try
                 {
-                    var trainingsCollection = db.GetCollection<Training>(nameof(Training));
-                    try
-                    {
-                        trainingsCollection.Insert(training);
-                    }
-                    catch(Exception e)
-                    {
-                        throw new TrainingRepositoryException($"Could not add new record! " +"Details: " + e.ToString());
-                    }
+                    trainingsCollection.Insert(training);
+                }
+                catch(Exception e)
+                {
+                    throw new TrainingRepositoryException($"Could not add new record! Details: " + e.ToString());
                 }
             });
         }
@@ -89,17 +81,13 @@ namespace MaggieTrainings.Web.DataRespository
         {
             await Task.Run(() =>
             {
-                using (var db = new LiteDatabase(GetLiteDbPath()))
+                try
                 {
-                    var trainingsCollection = db.GetCollection<Training>(nameof(Training));
-                    try
-                    {
-                        trainingsCollection.Delete(training.Id);
-                    }
-                    catch (Exception e)
-                    {
-                        throw new TrainingRepositoryException($"Could not remove record! " + "Details: " + e.ToString());
-                    }
+                    trainingsCollection.Delete(training.Id);
+                }
+                catch (Exception e)
+                {
+                    throw new TrainingRepositoryException($"Could not remove record! Details: " + e.ToString());
                 }
             });
         }
@@ -110,17 +98,13 @@ namespace MaggieTrainings.Web.DataRespository
 
             await Task.Run(() =>
             {
-                using (var db = new LiteDatabase(GetLiteDbPath()))
+                try
                 {
-                    var trainingsCollection = db.GetCollection<Training>(nameof(Training));
-                    try
-                    {
-                        foundRecord = trainingsCollection.FindById(id);
-                    }
-                    catch (Exception e)
-                    {
-                        throw new TrainingRepositoryException($"Could not retrieve record! " + "Details: " + e.ToString());
-                    }
+                    foundRecord = trainingsCollection.FindById(id);
+                }
+                catch (Exception e)
+                {
+                    throw new TrainingRepositoryException($"Could not retrieve record! Details: " + e.ToString());
                 }
             });
 
@@ -133,17 +117,13 @@ namespace MaggieTrainings.Web.DataRespository
 
             await Task.Run(() =>
             {
-                using (var db = new LiteDatabase(GetLiteDbPath()))
+                try
                 {
-                    var trainingsCollection = db.GetCollection<Training>(nameof(Training));
-                    try
-                    {
-                        foundRecords = trainingsCollection.FindAll().ToList();
-                    }
-                    catch (Exception e)
-                    {
-                        throw new TrainingRepositoryException($"Could not retrieve records! " + "Details: " + e.ToString());
-                    }
+                    foundRecords = trainingsCollection.FindAll().ToList();
+                }
+                catch (Exception e)
+                {
+                    throw new TrainingRepositoryException($"Could not retrieve records! Details: " + e.ToString());
                 }
             });
 
@@ -154,19 +134,20 @@ namespace MaggieTrainings.Web.DataRespository
         {
             await Task.Run(() =>
             {
-                using (var db = new LiteDatabase(GetLiteDbPath()))
+                try
                 {
-                    var trainingsCollection = db.GetCollection<Training>(nameof(Training));
-                    try
-                    {
-                        trainingsCollection.Update(training);
-                    }
-                    catch (Exception e)
-                    {
-                        throw new TrainingRepositoryException($"Could not update record! " + "Details: " + e.ToString());
-                    }
+                    trainingsCollection.Update(training);
+                }
+                catch (Exception e)
+                {
+                    throw new TrainingRepositoryException($"Could not update record! Details: " + e.ToString());
                 }
             });
+        }
+
+        public void Dispose()
+        {
+            dB.Dispose();
         }
     }
 }
