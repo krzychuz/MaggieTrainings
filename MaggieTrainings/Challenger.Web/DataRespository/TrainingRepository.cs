@@ -26,21 +26,6 @@ namespace MaggieTrainings.Web.DataRespository
             return environment.ContentRootPath + "\\MaggieTrainings.db";
         }
 
-        public async Task InitalizeRepository()
-        {
-            await Task.Run(() =>
-            {
-                try
-                {
-                    dB.GetCollection<Training>(nameof(Training));
-                }
-                catch(Exception e)
-                {
-                    throw new TrainingRepositoryException($"Could not initialize training repository! Details: " + e.ToString());
-                }
-            });
-        }
-
         public async Task CleanRepository()
         {
             await Task.Run(() =>

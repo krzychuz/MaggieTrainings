@@ -31,11 +31,6 @@ namespace MaggieTrainings.Web.TrainingRest
             await trainingRepository.CleanRepository();
         }
 
-        public async Task CreateTrainingDatabase()
-        {
-            await trainingRepository.InitalizeRepository();
-        }
-
         public async Task<IList<Training>> GetAllTrainings()
         {
             return await trainingRepository.GetAll();

@@ -9,7 +9,6 @@ namespace MaggieTrainings.Web.DataRespository
         Task Add(Training training);
         Task<Training> Get(int id);
         Task<IList<Training>> GetAll();
-        Task InitalizeRepository();
         Task CleanRepository();
         Task Remove(Training training);
         Task Update(Training training);

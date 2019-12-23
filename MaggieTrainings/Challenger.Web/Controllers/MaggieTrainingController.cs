@@ -28,11 +28,6 @@ namespace MaggieTrainings.Web.Controllers
             await maggieTrainingRestClient.AddTraining();
         }
 
-        public async Task CreateTrainingDatabase()
-        {
-            await maggieTrainingRestClient.CreateTrainingDatabase();
-        }
-
         public async Task ClearTrainingDatabase()
         {
             await maggieTrainingRestClient.ClearTrainingDatabase();
