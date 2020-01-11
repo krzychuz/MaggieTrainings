@@ -12,8 +12,10 @@ namespace MaggieTrainings.Web.TrainingRest
 
         Task ClearTrainingDatabase();
 
-        Task AddTraining();
+        Task AddTraining(TrainingResult trainingResult);
 
         Task<DashboardData> GetDashboardData();
+
+        Task<IList<TrainingDiscipline>> GetDisciplines();
     }
 }

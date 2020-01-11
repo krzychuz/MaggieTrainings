@@ -34,6 +34,7 @@ namespace MaggieTrainings.Web
       services.AddOptions();
       services.AddSingleton<IMaggieTrainingRestClient, MaggieTrainingRestClient>();
       services.AddSingleton<ITrainingRepository, TrainingRepository>();
+      services.AddSingleton<IDisciplinesRepository, DisciplinesRepository>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

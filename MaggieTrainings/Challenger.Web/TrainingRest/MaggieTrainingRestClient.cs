@@ -10,18 +10,25 @@ namespace MaggieTrainings.Web.TrainingRest
     public class MaggieTrainingRestClient : IMaggieTrainingRestClient
     {
         private readonly ITrainingRepository trainingRepository;
+        private readonly IDisciplinesRepository disciplinesRepository;
 
-        public MaggieTrainingRestClient(ITrainingRepository trainingRepository)
+        public MaggieTrainingRestClient(ITrainingRepository trainingRepository,
+            IDisciplinesRepository disciplinesRepository)
         {
             this.trainingRepository = trainingRepository;
+            this.disciplinesRepository = disciplinesRepository;
         }
 
-        public async Task AddTraining()
+        public async Task AddTraining(TrainingResult trainingResult)
         {
             var newTraining = new Training
             {
+                // TODO: AddData and EditData should be culture invariant
+                // I should pass pl-PL as CurrentCulture
+
                 AddDate = DateTime.Now.ToString("f"),
-                EditDate = DateTime.Now.ToString("f")
+                EditDate = DateTime.Now.ToString("f"),
+                TrainingResult = trainingResult
             };
             await trainingRepository.Add(newTraining);
         }
@@ -56,6 +63,11 @@ namespace MaggieTrainings.Web.TrainingRest
         public async Task<Training> GetTraining(int id)
         {
             return await trainingRepository.Get(id);
+        }
+
+        public async Task<IList<TrainingDiscipline>> GetDisciplines()
+        {
+            return await disciplinesRepository.GetDisciplines();
         }
     }
 }

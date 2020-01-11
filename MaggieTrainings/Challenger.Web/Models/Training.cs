@@ -12,5 +12,8 @@ namespace MaggieTrainings.Web.Models
         
         [BsonField]
         public string EditDate { get; set; }
+
+        [BsonField]
+        public TrainingResult TrainingResult { get; set; }
     }
 }
