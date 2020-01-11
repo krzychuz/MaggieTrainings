@@ -12,6 +12,10 @@ export class Trainings extends PureComponent {
         this.state = { dashboardData: [], trainingData: [], disciplinesData: [],
             dashboardLoading: true, trainingsLoading: true, isAddTrainingOpened: false};
 
+        this.toggleAddTraining = this.toggleAddTraining.bind(this)
+        this.handleAddTraining = this.handleAddTraining.bind(this)
+        this.loadData = this.loadData.bind(this);
+
         this.loadData();
     }
 
@@ -31,7 +35,7 @@ export class Trainings extends PureComponent {
             body: data
             })
         .then(() => {
-            this.loadData().bind(this);
+            this.loadData();
             this.toggleAddTraining();
         });
 
@@ -168,7 +172,7 @@ export class Trainings extends PureComponent {
                 </div>
 
                 <div className ="text-center bottom-spacing-big">
-                    <Button variant="primary" size="lg" onClick={this.toggleAddTraining.bind(this)}>Zarejestruj nowy trening</Button>
+                    <Button variant="primary" size="lg" onClick={this.toggleAddTraining}>Zarejestruj nowy trening</Button>
                     &nbsp;
                 </div>
 
@@ -184,7 +188,7 @@ export class Trainings extends PureComponent {
                     <div class="text-center bottom-spacing">
                         
                         <div class="col-auto my-1">
-                            <button type="submit" class="btn btn-primary bottom-spacing-big" onClick={this.handleAddTraining.bind(this)}>Dodaj</button>
+                            <button type="submit" class="btn btn-primary bottom-spacing-big" onClick={this.handleAddTraining}>Dodaj</button>
                         </div>
                     </div>
                 </Collapse>
