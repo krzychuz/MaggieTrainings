@@ -23,7 +23,8 @@ namespace MaggieTrainings.Web.DataRespository
                 new TrainingDiscipline() { Id = 2, Description = "Spacerowanie" },
                 new TrainingDiscipline() { Id = 3, Description = "Bieganie" },
                 new TrainingDiscipline() { Id = 4, Description = "Basen" },
-                new TrainingDiscipline() { Id = 5, Description = "Jazda na rowerze" }
+                new TrainingDiscipline() { Id = 5, Description = "Jazda na rowerze" },
+                new TrainingDiscipline() { Id = 6, Description = "Fitness" }
             };
         }
 

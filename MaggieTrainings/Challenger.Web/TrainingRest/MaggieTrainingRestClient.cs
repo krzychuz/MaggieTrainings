@@ -26,11 +26,17 @@ namespace MaggieTrainings.Web.TrainingRest
                 // TODO: AddData and EditData should be culture invariant
                 // I should pass pl-PL as CurrentCulture
 
-                AddDate = DateTime.Now.ToString("f"),
+                AddDate = trainingResult.TrainingDate,
                 EditDate = DateTime.Now.ToString("f"),
                 TrainingResult = trainingResult
             };
             await trainingRepository.Add(newTraining);
+        }
+
+        public async Task DeleteTraining(int id)
+        {
+            var training = await trainingRepository.Get(id);
+            await trainingRepository.Remove(training);
         }
 
         public async Task ClearTrainingDatabase()

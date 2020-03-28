@@ -30,7 +30,14 @@ namespace MaggieTrainings.Web.Controllers
         public async Task<IActionResult> AddTraining(TrainingResult trainingResult)
         {
             await maggieTrainingRestClient.AddTraining(trainingResult);
-            return CreatedAtAction(nameof(TrainingResult), trainingResult);
+            return StatusCode(201);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteTraining(int id)
+        {
+            await maggieTrainingRestClient.DeleteTraining(id);
+            return Ok();
         }
 
         [HttpGet]

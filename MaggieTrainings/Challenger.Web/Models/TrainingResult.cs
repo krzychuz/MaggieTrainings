@@ -16,5 +16,7 @@ namespace MaggieTrainings.Web.Models
         public string DisciplineName { get; set; }
 
         public int TrainingDuration { get; set; }
+
+        public string TrainingDate { get; set; }
     }
 }

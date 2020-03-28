@@ -18,3 +18,25 @@
 .bottom-spacing-small {
     margin-bottom: 10px;
 }
+
+.top-spacing-big {
+    margin-top: 35px;
+}
+
+.top-spacing-medium {
+    margin-top: 20px;
+}
+
+.top-spacing-small {
+    margin-top: 10px;
+}
+
+.link {
+    cursor: pointer;
+    color: #dc3545;
+    padding-bottom: 2px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
