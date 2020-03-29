@@ -40,3 +40,23 @@
 h1 {
     margin-bottom: 20px;
 }
+
+.react-datepicker-wrapper {
+    display: block !important;
+}
+
+@media screen and (max-width: 1000px) {
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .row-cards {
+        display: block;
+    }
+
+    .sport {
+        height: 50px;
+        width: 50px;
+        margin-right: 15px;
+    }
+}

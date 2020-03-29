@@ -20,7 +20,7 @@ export default class DisciplinesDropdown extends PureComponent {
             return null;
 
         return (
-            <div className="col">
+            <div>
                 <label className="mr-sm-2 sr-only">Preference</label>
                 <select className="custom-select mr-sm-2 bottom-spacing-medium" defaultValue={"Default"} ref={this.props.setRef}>
                     <option value="Default" disabled>Wybierz dyscyplinę...</option>

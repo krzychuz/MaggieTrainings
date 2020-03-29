@@ -60,11 +60,15 @@ export default class AddTraining extends PureComponent {
                 <Collapse isOpen={this.state.isAddTrainingOpened}>
                     <form>
                         <div className="form-row">
-                            <DatePicker className="form-control col" selected={this.state.selectedDate} onChange={this.handleDateChange}/>
+                            <div className="col">
+                                <DatePicker className="form-control col" selected={this.state.selectedDate} onChange={this.handleDateChange}/>
+                            </div>
                             <div className="col">
                                 <input type="text" className="form-control" placeholder="Czas trwania" ref="trainingDuration"/>
                             </div>
-                            <DisciplinesDropdown setRef={this.setRef}/>
+                            <div className="col">
+                                <DisciplinesDropdown setRef={this.setRef}/>
+                            </div>
                         </div>
                     </form>
                     <div className="text-center bottom-spacing">
