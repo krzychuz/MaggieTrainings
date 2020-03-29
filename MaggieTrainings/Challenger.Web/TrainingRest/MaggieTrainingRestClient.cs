@@ -46,7 +46,8 @@ namespace MaggieTrainings.Web.TrainingRest
 
         public async Task<IList<Training>> GetAllTrainings()
         {
-            return await trainingRepository.GetAll();
+            var allTrainings = await trainingRepository.GetAll();
+            return allTrainings.OrderBy(training => DateTime.Parse(training.AddDate)).ToList();
         }
 
         public async Task<DashboardData> GetDashboardData()
@@ -58,7 +59,7 @@ namespace MaggieTrainings.Web.TrainingRest
             var dashBoardData = new DashboardData
             {
                 NumberOfTrainings = allTrainings.Count,
-                LastTraining = allTrainings.Last().AddDate,
+                LastTraining = allTrainings.OrderBy(training => DateTime.Parse(training.AddDate)).Last().AddDate,
             };
 
             dashBoardData.IsYearlyGoalAchieved = dashBoardData.NumberOfTrainings >= 100;
