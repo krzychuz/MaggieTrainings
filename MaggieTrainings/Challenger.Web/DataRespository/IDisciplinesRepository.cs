@@ -6,6 +6,6 @@ namespace MaggieTrainings.Web.DataRespository
 {
     public interface IDisciplinesRepository
     {
-        Task<IList<TrainingDiscipline>> GetDisciplines();
+        IList<TrainingDiscipline> GetDisciplines();
     }
 }

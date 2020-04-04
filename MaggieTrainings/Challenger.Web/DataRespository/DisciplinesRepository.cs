@@ -28,13 +28,8 @@ namespace MaggieTrainings.Web.DataRespository
             };
         }
 
-        public async Task<IList<TrainingDiscipline>> GetDisciplines()
+        public IList<TrainingDiscipline> GetDisciplines()
         {
-            await Task.Run(() =>
-            {
-                Thread.Sleep(50);
-            });
-
             return trainingDisciplines;
         }
 

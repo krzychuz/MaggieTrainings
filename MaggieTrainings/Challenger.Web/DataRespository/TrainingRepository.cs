@@ -26,108 +26,89 @@ namespace MaggieTrainings.Web.DataRespository
             return environment.ContentRootPath + "\\MaggieTrainings.db";
         }
 
-        public async Task CleanRepository()
+        public void CleanRepository()
         {
-            await Task.Run(() =>
-            {
-                var allTrainings = trainingsCollection.FindAll();
+            var allTrainings = trainingsCollection.FindAll();
 
-                try
+            try
+            {
+                foreach (var training in allTrainings)
                 {
-                    foreach (var training in allTrainings)
-                    {
-                        trainingsCollection?.Delete(training.Id);
-                    }
+                    trainingsCollection?.Delete(training.Id);
                 }
-                catch (Exception e)
-                {
-                    throw new TrainingRepositoryException($"Delete all records failed. Not possible to delete some of records! " +
-                        "Details: " + e.ToString());
-                }
-            });
+            }
+            catch (Exception e)
+            {
+                throw new TrainingRepositoryException($"Delete all records failed. Not possible to delete some of records! " +
+                    "Details: " + e.ToString());
+            }
         }
 
-        public async Task Add(Training training)
+        public void Add(Training training)
         {
-            await Task.Run(() =>
+            try
             {
-                try
-                {
-                    trainingsCollection.Insert(training);
-                }
-                catch(Exception e)
-                {
-                    throw new TrainingRepositoryException($"Could not add new record! Details: " + e.ToString());
-                }
-            });
+                trainingsCollection.Insert(training);
+            }
+            catch(Exception e)
+            {
+                throw new TrainingRepositoryException($"Could not add new record! Details: " + e.ToString());
+            }
         }
 
-        public async Task Remove(Training training)
+        public void Remove(Training training)
         {
-            await Task.Run(() =>
+            try
             {
-                try
-                {
-                    trainingsCollection.Delete(training.Id);
-                }
-                catch (Exception e)
-                {
-                    throw new TrainingRepositoryException($"Could not remove record! Details: " + e.ToString());
-                }
-            });
+                trainingsCollection.Delete(training.Id);
+            }
+            catch (Exception e)
+            {
+                throw new TrainingRepositoryException($"Could not remove record! Details: " + e.ToString());
+            }
         }
 
-        public async Task<Training> Get(int id)
+        public Training Get(int id)
         {
-            Training foundRecord = null;
-
-            await Task.Run(() =>
+            Training foundRecord;
+            try
             {
-                try
-                {
-                    foundRecord = trainingsCollection.FindById(id);
-                }
-                catch (Exception e)
-                {
-                    throw new TrainingRepositoryException($"Could not retrieve record! Details: " + e.ToString());
-                }
-            });
+                foundRecord = trainingsCollection.FindById(id);
+            }
+            catch (Exception e)
+            {
+                throw new TrainingRepositoryException($"Could not retrieve record! Details: " + e.ToString());
+            }
 
             return foundRecord;
         }
 
-        public async Task<IList<Training>> GetAll()
+        public IList<Training> GetAll()
         {
-            List<Training> foundRecords = null;
+            List<Training> foundRecords;
 
-            await Task.Run(() =>
+            try
             {
-                try
-                {
-                    foundRecords = trainingsCollection.FindAll().ToList();
-                }
-                catch (Exception e)
-                {
-                    throw new TrainingRepositoryException($"Could not retrieve records! Details: " + e.ToString());
-                }
-            });
+                foundRecords = trainingsCollection.FindAll().ToList();
+            }
+            catch (Exception e)
+            {
+                throw new TrainingRepositoryException($"Could not retrieve records! Details: " + e.ToString());
+            }
 
             return foundRecords;
         }
 
-        public async Task Update(Training training)
+        public void Update(Training training)
         {
-            await Task.Run(() =>
+            try
             {
-                try
-                {
-                    trainingsCollection.Update(training);
-                }
-                catch (Exception e)
-                {
-                    throw new TrainingRepositoryException($"Could not update record! Details: " + e.ToString());
-                }
-            });
+                trainingsCollection.Update(training);
+            }
+            catch (Exception e)
+            {
+                throw new TrainingRepositoryException($"Could not update record! Details: " + e.ToString());
+            }
         }
 
         public void Dispose()

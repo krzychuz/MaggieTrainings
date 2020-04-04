@@ -6,18 +6,18 @@ namespace MaggieTrainings.Web.TrainingRest
 {
     public interface IMaggieTrainingRestClient
     {
-        Task<Training> GetTraining(int id);
+        Training GetTraining(int id);
 
-        Task<IList<Training>> GetAllTrainings();
+        IList<Training> GetAllTrainings();
 
-        Task ClearTrainingDatabase();
+        void ClearTrainingDatabase();
 
-        Task AddTraining(TrainingResult trainingResult);
+        void AddTraining(TrainingResult trainingResult);
 
-        Task DeleteTraining(int id);
+        void DeleteTraining(int id);
 
-        Task<DashboardData> GetDashboardData();
+        DashboardData GetDashboardData();
 
-        Task<IList<TrainingDiscipline>> GetDisciplines();
+        IList<TrainingDiscipline> GetDisciplines();
     }
 }

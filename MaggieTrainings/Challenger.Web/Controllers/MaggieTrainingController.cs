@@ -20,44 +20,44 @@ namespace MaggieTrainings.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetDashboardData()
+        public IActionResult GetDashboardData()
         {
-            DashboardData dashboardData = await maggieTrainingRestClient.GetDashboardData();
+            DashboardData dashboardData = maggieTrainingRestClient.GetDashboardData();
             return Ok(dashboardData);
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddTraining(TrainingResult trainingResult)
+        public IActionResult AddTraining(TrainingResult trainingResult)
         {
-            await maggieTrainingRestClient.AddTraining(trainingResult);
+            maggieTrainingRestClient.AddTraining(trainingResult);
             return StatusCode(201);
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteTraining(int id)
+        public IActionResult DeleteTraining(int id)
         {
-            await maggieTrainingRestClient.DeleteTraining(id);
+            maggieTrainingRestClient.DeleteTraining(id);
             return Ok();
         }
 
         [HttpGet]
-        public async Task<ActionResult<IList<Training>>> GetAllTrainings()
+        public ActionResult<IList<Training>> GetAllTrainings()
         {
-            IList<Training> allTrainings = await maggieTrainingRestClient.GetAllTrainings();
+            IList<Training> allTrainings = maggieTrainingRestClient.GetAllTrainings();
             return Ok(allTrainings);
         }
 
         [HttpPatch]
-        public async Task<IActionResult> ClearTrainingDatabase()
+        public IActionResult ClearTrainingDatabase()
         {
-            await maggieTrainingRestClient.ClearTrainingDatabase();
+            maggieTrainingRestClient.ClearTrainingDatabase();
             return Ok();
         }
 
         [HttpGet]
-        public async Task<ActionResult<IList<TrainingDiscipline>>> GetDisciplines()
+        public ActionResult<IList<TrainingDiscipline>> GetDisciplines()
         {
-            var disciplines = await maggieTrainingRestClient.GetDisciplines();
+            var disciplines = maggieTrainingRestClient.GetDisciplines();
             return Ok(disciplines);
         }
     }

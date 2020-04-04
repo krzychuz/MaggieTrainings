@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MaggieTrainings.Web.DataRespository;
 using System;
 using System.Linq;
+using System.Globalization;
 
 namespace MaggieTrainings.Web.TrainingRest
 {
@@ -19,7 +20,7 @@ namespace MaggieTrainings.Web.TrainingRest
             this.disciplinesRepository = disciplinesRepository;
         }
 
-        public async Task AddTraining(TrainingResult trainingResult)
+        public void AddTraining(TrainingResult trainingResult)
         {
             var newTraining = new Training
             {
@@ -30,36 +31,48 @@ namespace MaggieTrainings.Web.TrainingRest
                 EditDate = DateTime.Now.ToString("f"),
                 TrainingResult = trainingResult
             };
-            await trainingRepository.Add(newTraining);
+            trainingRepository.Add(newTraining);
         }
 
-        public async Task DeleteTraining(int id)
+        public void DeleteTraining(int id)
         {
-            var training = await trainingRepository.Get(id);
-            await trainingRepository.Remove(training);
+            var training = trainingRepository.Get(id);
+            trainingRepository.Remove(training);
         }
 
-        public async Task ClearTrainingDatabase()
+        public void ClearTrainingDatabase()
         {
-            await trainingRepository.CleanRepository();
+            trainingRepository.CleanRepository();
         }
 
-        public async Task<IList<Training>> GetAllTrainings()
+        public IList<Training> GetAllTrainings()
         {
-            var allTrainings = await trainingRepository.GetAll();
-            return allTrainings.OrderBy(training => DateTime.Parse(training.AddDate)).ToList();
+            var allTrainings = trainingRepository.GetAll();
+            return allTrainings.OrderBy(training => TryParseDate(training.AddDate)).ToList();
         }
 
-        public async Task<DashboardData> GetDashboardData()
+        private DateTime TryParseDate(string dateString)
+        {
+            try
+            {
+                return DateTime.ParseExact(dateString, "dd.MM.yyyy", CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                return DateTime.ParseExact(dateString, "d.MM.yyyy", CultureInfo.InvariantCulture);
+            }
+        }
+
+        public DashboardData GetDashboardData()
         {
             // TODO - Think if we can performance here
 
-            List<Training> allTrainings = new List<Training>(await trainingRepository.GetAll());
+            List<Training> allTrainings = new List<Training>(trainingRepository.GetAll());
 
             var dashBoardData = new DashboardData
             {
                 NumberOfTrainings = allTrainings.Count,
-                LastTraining = allTrainings.OrderBy(training => DateTime.Parse(training.AddDate)).Last().AddDate,
+                LastTraining = allTrainings.OrderBy(training => TryParseDate(training.AddDate)).Last().AddDate,
             };
 
             dashBoardData.IsYearlyGoalAchieved = dashBoardData.NumberOfTrainings >= 100;
@@ -67,14 +80,14 @@ namespace MaggieTrainings.Web.TrainingRest
             return dashBoardData;
         }
 
-        public async Task<Training> GetTraining(int id)
+        public Training GetTraining(int id)
         {
-            return await trainingRepository.Get(id);
+            return trainingRepository.Get(id);
         }
 
-        public async Task<IList<TrainingDiscipline>> GetDisciplines()
+        public IList<TrainingDiscipline> GetDisciplines()
         {
-            return await disciplinesRepository.GetDisciplines();
+            return disciplinesRepository.GetDisciplines();
         }
     }
 }

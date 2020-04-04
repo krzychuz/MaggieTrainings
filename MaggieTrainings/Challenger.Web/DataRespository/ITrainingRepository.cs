@@ -6,11 +6,11 @@ namespace MaggieTrainings.Web.DataRespository
 {
     public interface ITrainingRepository
     {
-        Task Add(Training training);
-        Task<Training> Get(int id);
-        Task<IList<Training>> GetAll();
-        Task CleanRepository();
-        Task Remove(Training training);
-        Task Update(Training training);
+        void Add(Training training);
+        Training Get(int id);
+        IList<Training> GetAll();
+        void CleanRepository();
+        void Remove(Training training);
+        void Update(Training training);
     }
 }
