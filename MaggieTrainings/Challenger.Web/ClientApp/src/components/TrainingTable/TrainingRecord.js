@@ -1,25 +1,23 @@
 import React, { PureComponent } from 'react';
 import { TiDelete } from "react-icons/ti";
 
-export default class TrainingRecord extends PureComponent {
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { deleteTrainingError, deleteTrainingPending, deleteTrainingSuccess } from '../../reducers/training'
+import { deleteTraining, fetchTrainings } from '../../actions/trainingService'
+
+class TrainingRecord extends PureComponent {
     
     constructor(props) {
         super(props);
         this.handleDeleteTraining = this.handleDeleteTraining.bind(this);
     }
 
-    handleDeleteTraining() {
+    async handleDeleteTraining() {
+        const { deleteTraining, fetchTrainings } = this.props;
 
-        var data = new FormData();
-        data.append("id", this.props.id);
-
-        fetch("MaggieTraining/DeleteTraining", {
-            method: "DELETE", 
-            body: data
-            })
-        .then(() => {
-            this.props.onDelete();
-        });
+        deleteTraining(this.props.id);
     }
 
     render() {
@@ -33,3 +31,18 @@ export default class TrainingRecord extends PureComponent {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    deleteTrainingError: deleteTrainingError(state),
+    deleteTrainingPending: deleteTrainingPending(state),
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+    deleteTraining: deleteTraining,
+    fetchTrainings: fetchTrainings
+}, dispatch)
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(TrainingRecord);

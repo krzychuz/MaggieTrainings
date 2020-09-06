@@ -1,24 +1,45 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { getTrainings, getTrainingsError, getTrainingsPending } from '../../reducers/training'
+import { fetchTrainings } from '../../actions/trainingService'
+
 import TrainingRecord from './TrainingRecord'
 
-export default class TrainingTable extends PureComponent {
+
+class TrainingTable extends Component {
     
     constructor(props) {
         super(props);
-        this.state = { trainingData: [], isDataLoading: true};
+        this.shouldComponentRender = this.shouldComponentRender.bind(this);
     }
 
-    componentDidMount() {
-        fetch('MaggieTraining/GetAllTrainings')
-        .then(response => response.json())
-        .then(data => {
-            this.setState({ trainingData: data, isDataLoading: false});
-        });
+    componentWillMount() {
+        const { fetchTrainings } = this.props;
+        fetchTrainings();
+    }
+
+    shouldComponentRender() {
+        const { trainingsPending } = this.props;
+
+        if (trainingsPending === undefined)
+            return false;
+
+        return !trainingsPending;
     }
 
     render() {
-        if (this.state.isDataLoading)
-            return null;
+        const {trainings, trainingsError, trainingsPending} = this.props;
+
+        if (!this.shouldComponentRender())
+            return (
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            )
 
         return (<table className='table table-striped'>
             <thead>
@@ -30,7 +51,7 @@ export default class TrainingTable extends PureComponent {
                 </tr>
             </thead>
             <tbody>
-                {this.state.trainingData.map(trainingData =>
+                {trainings.map(trainingData =>
                     <TrainingRecord key={trainingData.id}
                                     id={trainingData.id}
                                     addDate={trainingData.addDate}
@@ -40,3 +61,18 @@ export default class TrainingTable extends PureComponent {
         </table>);
     }
 }
+
+const mapStateToProps = state => ({
+    trainingsError: getTrainingsError(state),
+    trainings: getTrainings(state),
+    trainingsPending: getTrainingsPending(state)
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+    fetchTrainings: fetchTrainings
+}, dispatch)
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(TrainingTable);

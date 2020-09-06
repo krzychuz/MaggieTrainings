@@ -1,27 +1,50 @@
 import React, { PureComponent } from 'react';
 import ProgressBar from 'react-bootstrap/ProgressBar'
 
-export default class TrainingProgressBar extends PureComponent {
+import { getDashboardData, getDashbaordDataError, getDashboardDataPending } from '../../reducers/training'
+import { fetchDashboardData } from '../../actions/trainingService'
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+class TrainingProgressBar extends PureComponent {
     
     constructor(props) {
         super(props);
-        this.state = { trainingData: [], isDataLoading: true };
     }
 
-    componentDidMount() {
-        fetch('MaggieTraining/GetDashboardData')
-        .then(response => response.json())
-        .then(data => {
-            this.setState({ trainingData: data, isDataLoading: false });
-        })
+    shouldComponentRender() {
+        const { dashboardDataPending } = this.props;
+
+        if (dashboardDataPending === undefined)
+            return false;
+
+        return !dashboardDataPending;
     }
 
     render() {
-        if (this.state.isDataLoading)
+        const { dashboardData, dashboardDataError, dashboardDataPending } = this.props;
+
+        if (!this.shouldComponentRender())
             return null;
 
         return (
-            <ProgressBar animated now={this.state.trainingData.numberOfTrainings} />
+            <ProgressBar animated now={dashboardData.numberOfTrainings} />
         );
     }
 }
+
+const mapStateToProps = state => ({
+    dashboardDataError: getDashbaordDataError(state),
+    dashboardData: getDashboardData(state),
+    dashboardDataPending: getDashboardDataPending(state)
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+    fetchDashboardData: fetchDashboardData
+}, dispatch)
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(TrainingProgressBar);

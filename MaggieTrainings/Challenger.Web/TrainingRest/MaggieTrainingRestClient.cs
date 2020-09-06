@@ -11,13 +11,10 @@ namespace MaggieTrainings.Web.TrainingRest
     public class MaggieTrainingRestClient : IMaggieTrainingRestClient
     {
         private readonly ITrainingRepository trainingRepository;
-        private readonly IDisciplinesRepository disciplinesRepository;
 
-        public MaggieTrainingRestClient(ITrainingRepository trainingRepository,
-            IDisciplinesRepository disciplinesRepository)
+        public MaggieTrainingRestClient(ITrainingRepository trainingRepository)
         {
             this.trainingRepository = trainingRepository;
-            this.disciplinesRepository = disciplinesRepository;
         }
 
         public void AddTraining(TrainingResult trainingResult)
@@ -48,7 +45,7 @@ namespace MaggieTrainings.Web.TrainingRest
         public IList<Training> GetAllTrainings()
         {
             var allTrainings = trainingRepository.GetAll();
-            return allTrainings.OrderBy(training => TryParseDate(training.AddDate)).ToList();
+            return allTrainings.OrderByDescending(training => TryParseDate(training.AddDate)).ToList();
         }
 
         private DateTime TryParseDate(string dateString)
@@ -83,11 +80,6 @@ namespace MaggieTrainings.Web.TrainingRest
         public Training GetTraining(int id)
         {
             return trainingRepository.Get(id);
-        }
-
-        public IList<TrainingDiscipline> GetDisciplines()
-        {
-            return disciplinesRepository.GetDisciplines();
         }
     }
 }

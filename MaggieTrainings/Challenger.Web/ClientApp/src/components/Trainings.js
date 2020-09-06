@@ -12,14 +12,6 @@ export class Trainings extends PureComponent {
         super(props);
     }
 
-    onAdd() {
-        window.location.reload();
-    }
-
-    onDelete() {
-        window.location.reload();
-    }
-
     render() {
         return (
             <div>
@@ -37,13 +29,13 @@ export class Trainings extends PureComponent {
                     <TrainingProgressBar />
                 </div>
 
+                <AddTraining />
+
                 <div>
                     &nbsp;
                     <h1>Ostatnie treningi</h1>
-                    <TrainingTable onDelete={this.onDelete}/>
+                    <TrainingTable />
                 </div>
-
-                <AddTraining onAdd={this.onAdd}/>
 
             </div>
         );

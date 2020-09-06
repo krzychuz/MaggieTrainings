@@ -6,6 +6,11 @@ namespace MaggieTrainings.Web.DataRespository
 {
     public interface IDisciplinesRepository
     {
-        IList<TrainingDiscipline> GetDisciplines();
+        void Add(TrainingDiscipline training);
+        TrainingDiscipline Get(int id);
+        IList<TrainingDiscipline> GetAll();
+        void CleanRepository();
+        void Remove(int id);
+        void Update(TrainingDiscipline training);
     }
 }

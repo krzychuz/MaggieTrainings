@@ -1,4 +1,5 @@
-﻿using MaggieTrainings.Web.Models;
+﻿using MaggieTrainings.Web.DataRespository;
+using MaggieTrainings.Web.Models;
 using MaggieTrainings.Web.TrainingRest;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
@@ -10,16 +11,17 @@ using System.Threading.Tasks;
 
 namespace MaggieTrainings.Web.Controllers
 {
-    public class MaggieTrainingController : Controller
+    [Route("api/[controller]")]
+    public class TrainingsController : Controller
     {
         private readonly IMaggieTrainingRestClient maggieTrainingRestClient;
 
-        public MaggieTrainingController(IMaggieTrainingRestClient maggieTrainingRestClient)
+        public TrainingsController(IMaggieTrainingRestClient maggieTrainingRestClient)
         {
             this.maggieTrainingRestClient = maggieTrainingRestClient;
         }
 
-        [HttpGet]
+        [HttpGet("dashboardData")]
         public IActionResult GetDashboardData()
         {
             DashboardData dashboardData = maggieTrainingRestClient.GetDashboardData();
@@ -33,7 +35,7 @@ namespace MaggieTrainings.Web.Controllers
             return StatusCode(201);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult DeleteTraining(int id)
         {
             maggieTrainingRestClient.DeleteTraining(id);
@@ -52,13 +54,6 @@ namespace MaggieTrainings.Web.Controllers
         {
             maggieTrainingRestClient.ClearTrainingDatabase();
             return Ok();
-        }
-
-        [HttpGet]
-        public ActionResult<IList<TrainingDiscipline>> GetDisciplines()
-        {
-            var disciplines = maggieTrainingRestClient.GetDisciplines();
-            return Ok(disciplines);
         }
     }
 }

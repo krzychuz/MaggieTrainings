@@ -5,7 +5,13 @@ import DisciplinesDropdown from './DisciplinesDropdown';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-export default class AddTraining extends PureComponent {
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { addTrainingError, addTrainingPending, addTrainingSuccess } from '../../reducers/training'
+import { fetchTrainings, addTraining } from '../../actions/trainingService'
+
+class AddTraining extends PureComponent {
     
     constructor(props) {
         super(props);
@@ -25,24 +31,16 @@ export default class AddTraining extends PureComponent {
         });
       };
 
-    handleAddTraining() {
-        var selectedDiscipline = this.childRef.value;
-        var trainingDuration = this.refs.trainingDuration.value;
+    async handleAddTraining() {
+        const { addTraining, fetchTrainings } = this.props;
 
-        var data = new FormData();
-        data.append("DisciplineName", selectedDiscipline);
-        data.append("TrainingDuration", trainingDuration);
-        data.append("TrainingDate", this.state.selectedDate.toLocaleDateString("pl-PL"));
+        var trainingData = {
+            discipline: this.childRef.value,
+            duration: this.refs.trainingDuration.value,
+            date: this.state.selectedDate.toLocaleDateString("pl-PL")
+        }
 
-        fetch("MaggieTraining/AddTraining", {
-            method: "POST", 
-            body: data
-            })
-        .then(() => {
-            this.toggleAddTraining();
-            this.props.onAdd();
-        });
-
+        addTraining(trainingData);
     }
 
     setRef(reference) {
@@ -81,3 +79,19 @@ export default class AddTraining extends PureComponent {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    addTrainingError: addTrainingError(state),
+    addTrainingPending: addTrainingPending(state),
+    addTrainingSuccess: addTrainingSuccess(state)
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+    addTraining: addTraining,
+    fetchTrainings: fetchTrainings
+}, dispatch)
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AddTraining);

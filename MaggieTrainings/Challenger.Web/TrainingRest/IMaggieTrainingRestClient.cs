@@ -17,7 +17,5 @@ namespace MaggieTrainings.Web.TrainingRest
         void DeleteTraining(int id);
 
         DashboardData GetDashboardData();
-
-        IList<TrainingDiscipline> GetDisciplines();
     }
 }

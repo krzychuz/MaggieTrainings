@@ -1,22 +1,36 @@
 import React, { PureComponent } from 'react';
 
-export default class DisciplinesDropdown extends PureComponent {
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { getDisciplines, getDisciplinesError, getDisciplinesPending } from '../../reducers/discipline'
+import { fetchDisciplines } from '../../actions/disciplineService'
+
+class DisciplinesDropdown extends PureComponent {
     
     constructor(props) {
         super(props);
         this.state = {disciplinesData: [], isDataLoading: true}
     }
 
-    componentDidMount() {
-        fetch('MaggieTraining/GetDisciplines')
-        .then(response => response.json())
-        .then(data => {
-            this.setState({ disciplinesData: data, isDataLoading: false });
-        });
+    componentWillMount() {
+        const { fetchDisciplines } = this.props;
+        fetchDisciplines();
+    }
+
+    shouldComponentRender() {
+        const { disciplinesPending } = this.props;
+
+        if (disciplinesPending === undefined)
+            return false;
+
+        return !disciplinesPending;
     }
 
     render() {
-        if (this.state.isDataLoading)
+        const { disciplines, disciplinesError, disciplinesPending } = this.props;
+
+        if (!this.shouldComponentRender())
             return null;
 
         return (
@@ -24,7 +38,7 @@ export default class DisciplinesDropdown extends PureComponent {
                 <label className="mr-sm-2 sr-only">Preference</label>
                 <select className="custom-select mr-sm-2 bottom-spacing-medium" defaultValue={"Default"} ref={this.props.setRef}>
                     <option value="Default" disabled>Wybierz dyscyplinę...</option>
-                    {this.state.disciplinesData.map(disciplinesData =>
+                    {disciplines.map(disciplinesData =>
                         <option key={disciplinesData.id} value={disciplinesData.description}>{disciplinesData.description}</option>
                     )}
                 </select>
@@ -32,3 +46,18 @@ export default class DisciplinesDropdown extends PureComponent {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    disciplines: getDisciplines(state),
+    disciplinesError: getDisciplinesError(state),
+    disciplinesPending: getDisciplinesPending(state)
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+    fetchDisciplines: fetchDisciplines
+}, dispatch)
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(DisciplinesDropdown);
