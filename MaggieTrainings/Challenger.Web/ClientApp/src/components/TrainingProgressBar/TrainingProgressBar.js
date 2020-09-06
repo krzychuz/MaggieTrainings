@@ -8,10 +8,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 class TrainingProgressBar extends PureComponent {
-    
-    constructor(props) {
-        super(props);
-    }
 
     shouldComponentRender() {
         const { dashboardDataPending } = this.props;
@@ -23,7 +19,7 @@ class TrainingProgressBar extends PureComponent {
     }
 
     render() {
-        const { dashboardData, dashboardDataError, dashboardDataPending } = this.props;
+        const { dashboardData } = this.props;
 
         if (!this.shouldComponentRender())
             return null;

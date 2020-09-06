@@ -15,7 +15,7 @@ class TrainingRecord extends PureComponent {
     }
 
     async handleDeleteTraining() {
-        const { deleteTraining, fetchTrainings } = this.props;
+        const { deleteTraining } = this.props;
 
         deleteTraining(this.props.id);
     }
@@ -35,6 +35,7 @@ class TrainingRecord extends PureComponent {
 const mapStateToProps = state => ({
     deleteTrainingError: deleteTrainingError(state),
     deleteTrainingPending: deleteTrainingPending(state),
+    deleteTrainingSuccess: deleteTrainingSuccess(state)
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

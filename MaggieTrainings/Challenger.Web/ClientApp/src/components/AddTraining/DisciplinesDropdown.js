@@ -13,7 +13,7 @@ class DisciplinesDropdown extends PureComponent {
         this.state = {disciplinesData: [], isDataLoading: true}
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const { fetchDisciplines } = this.props;
         fetchDisciplines();
     }
@@ -28,7 +28,7 @@ class DisciplinesDropdown extends PureComponent {
     }
 
     render() {
-        const { disciplines, disciplinesError, disciplinesPending } = this.props;
+        const { disciplines } = this.props;
 
         if (!this.shouldComponentRender())
             return null;

@@ -13,7 +13,7 @@ class TrainingDashboard extends PureComponent {
         this.shouldComponentRender = this.shouldComponentRender.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         const { fetchDashboardData } = this.props;
         fetchDashboardData();
     }
@@ -28,7 +28,7 @@ class TrainingDashboard extends PureComponent {
     }
 
     render() {
-        const { dashboardData, dashboardDataError, dashboardDataPending } = this.props;
+        const { dashboardData } = this.props;
 
         if (!this.shouldComponentRender())
             return null;

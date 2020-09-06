@@ -32,7 +32,7 @@ class AddTraining extends PureComponent {
       };
 
     async handleAddTraining() {
-        const { addTraining, fetchTrainings } = this.props;
+        const { addTraining } = this.props;
 
         var trainingData = {
             discipline: this.childRef.value,

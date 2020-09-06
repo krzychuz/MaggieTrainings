@@ -49,7 +49,7 @@ export function addTraining(training) {
     trainingData.append("TrainingDate", training.date);
 
     return dispatch => {
-        dispatch(addTrainingPending());
+    dispatch(addTrainingPending())
         fetch(`api/trainings`, {
             method: 'POST',
             body: trainingData
@@ -60,8 +60,8 @@ export function addTraining(training) {
                     throw (res.error);
                 }
 
-                return dispatch(addTrainingSuccess(res))
-                    .then(() => fetchTrainings());
+                dispatch(addTrainingSuccess());
+                return res;
             })
             .catch(error => {
                 dispatch(addTrainingError(error));

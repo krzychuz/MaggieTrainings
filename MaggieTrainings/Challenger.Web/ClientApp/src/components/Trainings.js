@@ -8,10 +8,6 @@ import AddTraining from './AddTraining/AddTraining';
 
 export class Trainings extends PureComponent {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div>
