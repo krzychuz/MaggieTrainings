@@ -29,6 +29,8 @@ export function deleteTraining(id) {
         })
             .then(() => {
                 dispatch(deleteTrainingSuccess());
+                dispatch(fetchTrainings());
+                dispatch(fetchDashboardData());
             })
             .catch(error => {
                 dispatch(deleteTrainingError(error));
@@ -51,6 +53,8 @@ export function addTraining(training) {
         })
             .then(() => {
                 dispatch(addTrainingSuccess());
+                dispatch(fetchTrainings());
+                dispatch(fetchDashboardData());
             })
             .catch(error => {
                 dispatch(addTrainingError(error));
