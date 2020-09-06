@@ -7,17 +7,17 @@ export function fetchTrainings() {
     return dispatch => {
         dispatch(fetchTrainingsPending());
         fetch('api/trainings')
-        .then(res => res.json())
-        .then(res => {
-            if(res.error) {
-                throw(res.error);
-            }
-            dispatch(fetchTrainingsSuccess(res));
-            return res;
-        })
-        .catch(error => {
-            dispatch(fetchTrainingsError(error));
-        })
+            .then(res => res.json())
+            .then(res => {
+                if(res.error) {
+                    throw(res.error);
+                }
+                dispatch(fetchTrainingsSuccess(res));
+                return res;
+            })
+            .catch(error => {
+                dispatch(fetchTrainingsError(error));
+            })
     }
 }
 
@@ -27,13 +27,8 @@ export function deleteTraining(id) {
         fetch(`api/trainings/${id}`, {
             method: 'DELETE'
         })
-            .then(res => res.json())
-            .then(res => {
-                if (res.error) {
-                    throw (res.error);
-                }
-                dispatch(deleteTrainingSuccess(res));
-                return res;
+            .then(() => {
+                dispatch(deleteTrainingSuccess());
             })
             .catch(error => {
                 dispatch(deleteTrainingError(error));
@@ -49,19 +44,13 @@ export function addTraining(training) {
     trainingData.append("TrainingDate", training.date);
 
     return dispatch => {
-    dispatch(addTrainingPending())
+        dispatch(addTrainingPending())
         fetch(`api/trainings`, {
             method: 'POST',
             body: trainingData
         })
-            .then(res => res.json())
-            .then(res => {
-                if (res.error) {
-                    throw (res.error);
-                }
-
+            .then(() => {
                 dispatch(addTrainingSuccess());
-                return res;
             })
             .catch(error => {
                 dispatch(addTrainingError(error));

@@ -7,11 +7,6 @@ import { getDisciplines, getDisciplinesError, getDisciplinesPending } from '../.
 import { fetchDisciplines } from '../../actions/disciplineService'
 
 class DisciplinesDropdown extends PureComponent {
-    
-    constructor(props) {
-        super(props);
-        this.state = {disciplinesData: [], isDataLoading: true}
-    }
 
     componentDidMount() {
         const { fetchDisciplines } = this.props;
