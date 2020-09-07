@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
     "axios": "^0.19.2",
     "bootstrap": "^4.5.2",
     "jquery": "^3.5.1",
+    "material-table": "^1.69.0",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^11.0.5",

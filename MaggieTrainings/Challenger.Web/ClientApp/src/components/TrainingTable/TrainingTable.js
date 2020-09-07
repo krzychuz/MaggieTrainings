@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { getTrainings, getTrainingsError, getTrainingsPending } from '../../reducers/training'
-import { fetchTrainings } from '../../actions/trainingService'
+import { getTrainings, getTrainingsError, getTrainingsPending } from '../../reducers/training';
+import { fetchTrainings } from '../../actions/trainingService';
 
-import TrainingRecord from './TrainingRecord'
+import MaterialTable, { Column } from 'material-table';
 
 
 class TrainingTable extends Component {
@@ -41,24 +41,34 @@ class TrainingTable extends Component {
                 </div>
             )
 
-        return (<table className='table table-striped'>
-            <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>Aktywność</th>
-                    <th>Czas trwania</th>
-                    <th>Akcja</th>
-                </tr>
-            </thead>
-            <tbody>
-                {trainings.map(trainingData =>
-                    <TrainingRecord key={trainingData.id}
-                                    id={trainingData.id}
-                                    addDate={trainingData.addDate}
-                                    trainingResult={trainingData.trainingResult}
-                                    onDelete={this.props.onDelete}/>)}
-            </tbody>
-        </table>);
+        return (
+            <MaterialTable
+                title="Ostatnie treningi"
+                columns={[
+                    { title: 'Data', field: 'addDate', type: 'date' },
+                    { title: 'Dyscyplina', field: 'trainingResult.disciplineName' },
+                    { title: 'Czas trwania', field: 'trainingResult.trainingDuration' },
+                ]}
+                data={trainings}
+                editable={{
+                    onRowUpdate: (newData, oldData) => {
+
+                    },
+                    onRowDelete: (oldData) => {
+
+                    },
+                    onRowAdd: (newData) => {
+
+                    }
+                }}
+                options={{
+                    search: false,
+                    pageSize: 10,
+                    filtering: true
+                }}
+            />
+        );
+
     }
 }
 
