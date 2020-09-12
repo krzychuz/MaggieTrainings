@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MaggieTrainings.Web.DataRespository.Generics;
-using MaggieTrainings.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
+using MaggieTrainings.Domain.Models.Data;
+using MaggieTrainings.Domain.Models.Requests;
+using MaggieTrainings.Domain.Models.Responses;
+using AutoMapper;
 
 namespace MaggieTrainings.Web.Controllers
 {
@@ -12,23 +15,24 @@ namespace MaggieTrainings.Web.Controllers
     [ApiController]
     public class DisciplinesController : ControllerBase
     {
-        private readonly IGenericRepository<TrainingDiscipline> disciplinesRepository;
+        private readonly IGenericRepository<TrainingDiscipline> _disciplinesRepository;
+        private readonly IMapper _mapper;
 
-        public DisciplinesController(IUnitOfWork unitOfWork)
+        public DisciplinesController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            this.disciplinesRepository = unitOfWork.Repository<TrainingDiscipline>();
-        }
+            _disciplinesRepository = unitOfWork.Repository<TrainingDiscipline>();
+            _mapper = mapper;        }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TrainingDiscipline>>> Get()
+        public async Task<ActionResult<IEnumerable<TrainingDisciplineResponse>>> GetAll()
         {
-            return Ok(disciplinesRepository.GetAll());
+            return Ok(_disciplinesRepository.GetAll());
         }
 
         [HttpGet("{id}", Name = "Get")]
-        public async Task<ActionResult<TrainingDiscipline>> Get(int id)
+        public async Task<ActionResult<TrainingDisciplineResponse>> Get(int id)
         {
-            var trainingItem = disciplinesRepository.GetById(id);
+            var trainingItem = _disciplinesRepository.GetById(id);
 
             if (trainingItem is null)
                 return NotFound();
@@ -37,28 +41,29 @@ namespace MaggieTrainings.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] TrainingDiscipline trainingDiscipline)
+        public async Task<ActionResult> Post([FromBody] TrainingDisciplineRequest trainingDisciplineRequest)
         {
-            disciplinesRepository.Insert(trainingDiscipline);
+            var trainingDiscipline = _mapper.Map<TrainingDiscipline>(trainingDisciplineRequest);
+            _disciplinesRepository.Insert(trainingDiscipline);
             return StatusCode(201);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, [FromBody] TrainingDiscipline trainingDiscipline)
+        public async Task<ActionResult> Put(int id, [FromBody] TrainingDisciplineRequest trainingDisciplineRequest)
         {
-            if (id != trainingDiscipline.Id)
-            {
-                return BadRequest();
-            }
+            var trainingDiscipline = _mapper.Map<TrainingDiscipline>(trainingDisciplineRequest);
 
-            var trainingItem = disciplinesRepository.GetById(id);
+            if (id != trainingDiscipline.Id)
+                return BadRequest();
+
+            var trainingItem = _disciplinesRepository.GetById(id);
 
             if (trainingItem is null)
                 return NotFound();
 
             trainingItem.Description = trainingDiscipline.Description;
 
-            disciplinesRepository.Edit(trainingItem);
+            _disciplinesRepository.Edit(trainingItem);
 
             return NoContent();
         }
@@ -66,12 +71,12 @@ namespace MaggieTrainings.Web.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var trainingItem = disciplinesRepository.GetById(id);
+            var trainingItem = _disciplinesRepository.GetById(id);
 
             if (trainingItem == null)
                 return NotFound();
 
-            disciplinesRepository.Delete(id);
+            _disciplinesRepository.Delete(id);
 
             return NoContent();
         }

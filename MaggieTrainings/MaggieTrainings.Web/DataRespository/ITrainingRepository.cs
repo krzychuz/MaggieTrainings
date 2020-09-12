@@ -1,6 +1,5 @@
-﻿using MaggieTrainings.Domain.Models;
+﻿using MaggieTrainings.Domain.Models.Data;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace MaggieTrainings.Web.DataRespository
 {

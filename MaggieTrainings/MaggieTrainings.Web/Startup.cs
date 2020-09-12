@@ -1,4 +1,6 @@
+using AutoMapper;
 using MaggieTrainings.Web.DataRespository.Generics;
+using MaggieTrainings.Web.Extensions;
 using MaggieTrainings.Web.TrainingRest;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,6 +38,10 @@ namespace MaggieTrainings.Web
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddSwaggerGen();
+            services.AddAutoMapper(configuration => 
+            {
+                configuration.AddTrainingProfile();
+            }, typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

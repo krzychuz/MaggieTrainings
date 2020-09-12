@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace MaggieTrainings.Domain.Models
+namespace MaggieTrainings.Domain.Models.Data
 {
-    public class DashboardData
+    public class DashboardDataResponse
     {
 
         public int NumberOfTrainings { get; set; }

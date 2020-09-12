@@ -1,11 +1,9 @@
-﻿using MaggieTrainings.Domain.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using MaggieTrainings.Web.DataRespository;
 using System;
 using System.Linq;
-using System.Globalization;
 using MaggieTrainings.Web.DataRespository.Generics;
+using MaggieTrainings.Domain.Models.Data;
 
 namespace MaggieTrainings.Web.TrainingRest
 {
@@ -18,15 +16,12 @@ namespace MaggieTrainings.Web.TrainingRest
             trainingsRepository = unitOfWork.Repository<Training>();
         }
 
-        public void AddTraining(TrainingResult trainingResult)
+        public void AddTraining(Training training)
         {
-            var newTraining = new Training
-            {
-                AddDate = trainingResult.Date,
-                EditDate = DateTime.UtcNow,
-                TrainingResult = trainingResult
-            };
-            trainingsRepository.Insert(newTraining);
+            training.AddDate = DateTime.UtcNow;
+            training.EditDate = DateTime.UtcNow;
+
+            trainingsRepository.Insert(training);
         }
 
         public void DeleteTraining(int id)
@@ -63,12 +58,9 @@ namespace MaggieTrainings.Web.TrainingRest
             return trainingsRepository.GetById(id);
         }
 
-        public void EditTraining(int id, TrainingResult trainingResult)
+        public void EditTraining(int id, Training training)
         {
-            var training = GetTraining(id);
-
             training.EditDate = DateTime.UtcNow;
-            training.TrainingResult = trainingResult;
 
             trainingsRepository.Edit(training);
         }

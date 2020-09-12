@@ -1,7 +1,7 @@
 ﻿using LiteDB;
 using System;
 
-namespace MaggieTrainings.Domain.Models
+namespace MaggieTrainings.Domain.Models.Data
 {
     public class Training
     {

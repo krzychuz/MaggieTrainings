@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MaggieTrainings.Domain.Models
+namespace MaggieTrainings.Domain.Models.Data
 {
     public class TrainingResult
     {

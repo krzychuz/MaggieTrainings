@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MaggieTrainings.Domain.Models;
+using MaggieTrainings.Domain.Models.Data;
 
 namespace MaggieTrainings.Web.TrainingRest
 {
@@ -10,11 +11,11 @@ namespace MaggieTrainings.Web.TrainingRest
 
         IList<Training> GetAllTrainings();
 
-        void AddTraining(TrainingResult trainingResult);
+        void AddTraining(Training trainingResult);
 
         void DeleteTraining(int id);
 
-        void EditTraining(int id, TrainingResult trainingResult);
+        void EditTraining(int id, Training trainingResult);
 
         DashboardData GetDashboardData();
     }

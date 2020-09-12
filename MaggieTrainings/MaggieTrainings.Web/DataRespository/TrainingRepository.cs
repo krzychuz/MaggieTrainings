@@ -1,10 +1,9 @@
 ﻿using LiteDB;
-using MaggieTrainings.Domain.Models;
+using MaggieTrainings.Domain.Models.Data;
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MaggieTrainings.Web.DataRespository
 {
