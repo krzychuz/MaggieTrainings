@@ -14,9 +14,9 @@ namespace MaggieTrainings.Web.Controllers
     [Route("api/[controller]")]
     public class TrainingsController : Controller
     {
-        private readonly IMaggieTrainingRestClient maggieTrainingRestClient;
+        private readonly ITrainingHandler maggieTrainingRestClient;
 
-        public TrainingsController(IMaggieTrainingRestClient maggieTrainingRestClient)
+        public TrainingsController(ITrainingHandler maggieTrainingRestClient)
         {
             this.maggieTrainingRestClient = maggieTrainingRestClient;
         }
@@ -54,13 +54,6 @@ namespace MaggieTrainings.Web.Controllers
         {
             IList<Training> allTrainings = maggieTrainingRestClient.GetAllTrainings();
             return Ok(allTrainings);
-        }
-
-        [HttpPatch]
-        public IActionResult ClearTrainingDatabase()
-        {
-            maggieTrainingRestClient.ClearTrainingDatabase();
-            return Ok();
         }
     }
 }

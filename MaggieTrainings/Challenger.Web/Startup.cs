@@ -1,4 +1,5 @@
 using MaggieTrainings.Web.DataRespository;
+using MaggieTrainings.Web.DataRespository.Generics;
 using MaggieTrainings.Web.Models;
 using MaggieTrainings.Web.TrainingRest;
 using Microsoft.AspNetCore.Builder;
@@ -32,9 +33,8 @@ namespace MaggieTrainings.Web
             });
 
             services.AddOptions();
-            services.AddSingleton<IMaggieTrainingRestClient, MaggieTrainingRestClient>();
-            services.AddSingleton<ITrainingRepository, TrainingRepository>();
-            services.AddSingleton<IDisciplinesRepository, DisciplinesRepository>();
+            services.AddScoped<ITrainingHandler, TrainingHandler>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddSwaggerGen();
         }

@@ -4,13 +4,11 @@ using MaggieTrainings.Web.Models;
 
 namespace MaggieTrainings.Web.TrainingRest
 {
-    public interface IMaggieTrainingRestClient
+    public interface ITrainingHandler
     {
         Training GetTraining(int id);
 
         IList<Training> GetAllTrainings();
-
-        void ClearTrainingDatabase();
 
         void AddTraining(TrainingResult trainingResult);
 

@@ -5,16 +5,18 @@ using MaggieTrainings.Web.DataRespository;
 using System;
 using System.Linq;
 using System.Globalization;
+using MaggieTrainings.Web.DataRespository.Generics;
 
 namespace MaggieTrainings.Web.TrainingRest
 {
-    public class MaggieTrainingRestClient : IMaggieTrainingRestClient
+    public class TrainingHandler : ITrainingHandler
     {
-        private readonly ITrainingRepository trainingRepository;
+        private readonly IUnitOfWork unitOfWork;
+        private readonly IGenericRepository<Training> trainingsRepository;
 
-        public MaggieTrainingRestClient(ITrainingRepository trainingRepository)
+        public TrainingHandler(IUnitOfWork unitOfWork)
         {
-            this.trainingRepository = trainingRepository;
+            trainingsRepository = unitOfWork.Repository<Training>();
         }
 
         public void AddTraining(TrainingResult trainingResult)
@@ -28,23 +30,18 @@ namespace MaggieTrainings.Web.TrainingRest
                 EditDate = DateTime.UtcNow.ToString("f"),
                 TrainingResult = trainingResult
             };
-            trainingRepository.Add(newTraining);
+            trainingsRepository.Insert(newTraining);
         }
 
         public void DeleteTraining(int id)
         {
-            var training = trainingRepository.Get(id);
-            trainingRepository.Remove(training);
+            trainingsRepository.Delete(id);
         }
 
-        public void ClearTrainingDatabase()
-        {
-            trainingRepository.CleanRepository();
-        }
 
         public IList<Training> GetAllTrainings()
         {
-            var allTrainings = trainingRepository.GetAll();
+            var allTrainings = trainingsRepository.GetAll();
             return allTrainings.OrderByDescending(training => TryParseDate(training.AddDate)).ToList();
         }
 
@@ -64,7 +61,7 @@ namespace MaggieTrainings.Web.TrainingRest
         {
             // TODO - Think if we can performance here
 
-            List<Training> allTrainings = new List<Training>(trainingRepository.GetAll());
+            List<Training> allTrainings = new List<Training>(trainingsRepository.GetAll());
 
             var dashBoardData = new DashboardData
             {
@@ -79,7 +76,7 @@ namespace MaggieTrainings.Web.TrainingRest
 
         public Training GetTraining(int id)
         {
-            return trainingRepository.Get(id);
+            return trainingsRepository.GetById(id);
         }
 
         public void EditTraining(int id, TrainingResult trainingResult)
@@ -89,7 +86,7 @@ namespace MaggieTrainings.Web.TrainingRest
             training.EditDate = DateTime.UtcNow.ToString("f");
             training.TrainingResult = trainingResult;
 
-            trainingRepository.Update(training);
+            trainingsRepository.Edit(training);
         }
     }
 }
