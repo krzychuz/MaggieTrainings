@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MaggieTrainings.Domain.Models.Data;
 using MaggieTrainings.Domain.Models.Requests;
+using MaggieTrainings.Domain.Models.Responses;
 using MaggieTrainings.Web.TrainingRest;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -52,7 +53,7 @@ namespace MaggieTrainings.Web.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateTraining(int id, [FromForm]TrainingRequest trainingRequest)
+        public IActionResult UpdateTraining(int id, [FromBody]TrainingRequest trainingRequest)
         {
             if (id != trainingRequest.Id)
                 return BadRequest();
@@ -67,6 +68,18 @@ namespace MaggieTrainings.Web.Controllers
         {
             IList<Training> allTrainings = _trainingHandler.GetAllTrainings();
             return Ok(allTrainings);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<TrainingResponse> GetTraining(int id)
+        {
+            var training = _trainingHandler.GetTraining(id);
+
+            if (training is null)
+                return NotFound();
+
+            var trainingResponse = _mapper.Map<TrainingResponse>(training);
+            return trainingResponse;
         }
     }
 }
