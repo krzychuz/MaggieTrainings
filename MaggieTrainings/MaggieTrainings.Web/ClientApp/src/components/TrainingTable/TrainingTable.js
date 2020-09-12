@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { fetchTrainings, deleteTraining, addTraining, editTraining } from '../../actions/trainingService';
+import { fetchDisciplines } from '../../actions/disciplineService';
 
 import { deleteTrainingError, deleteTrainingPending, deleteTrainingSuccess } from '../../reducers/training'
 import { getTrainings, getTrainingsError, getTrainingsPending } from '../../reducers/training';
 import { addTrainingError, addTrainingPending, addTrainingSuccess } from '../../reducers/training'
 import { editTrainingError, editTrainingPending, editTrainingSuccess } from '../../reducers/training'
+import { getDisciplines, getDisciplinesError, getDisciplinesPending } from '../../reducers/discipline'
 
 import MaterialTable, { Column } from 'material-table';
 
@@ -20,8 +22,9 @@ class TrainingTable extends Component {
     }
 
     componentDidMount() {
-        const { fetchTrainings } = this.props;
+        const { fetchTrainings, fetchDisciplines } = this.props;
         fetchTrainings();
+        fetchDisciplines();
     }
 
     shouldComponentRender() {
@@ -33,13 +36,23 @@ class TrainingTable extends Component {
         return !trainingsPending;
     }
 
+    createDisciplinesLookup(disciplines) {
+        var dynamicObject = {};
+
+        disciplines.forEach(function (element, index, array) {
+            dynamicObject[element.id] = element.description;
+        });
+
+    return dynamicObject;
+} 
+
     async handleAddTraining(training) {
         const { addTraining } = this.props;
 
         var trainingRequest = {
             trainingResult: {
                 discipline: {
-                    id: 999,
+                    id: training.trainingResult.discipline.id,
                     description: training.trainingResult.discipline.description
                 },
                 duration: training.trainingResult.duration,
@@ -63,7 +76,7 @@ class TrainingTable extends Component {
             id: training.id,
             trainingResult: {
                 discipline: {
-                    id: 999,
+                    id: training.trainingResult.discipline.id,
                     description: training.trainingResult.discipline.description
                 },
                 duration: training.trainingResult.duration,
@@ -75,7 +88,7 @@ class TrainingTable extends Component {
     }
 
     render() {
-        const { trainings } = this.props;
+        const { trainings, disciplines } = this.props;
 
         if (!this.shouldComponentRender())
             return (
@@ -91,8 +104,8 @@ class TrainingTable extends Component {
                 title="Ostatnie treningi"
                 columns={[
                     { title: 'Data', field: 'trainingResult.date', type: 'date' },
-                    { title: 'Dyscyplina', field: 'trainingResult.discipline.description' },
-                    { title: 'Czas trwania', field: 'trainingResult.duration' },
+                    { title: 'Dyscyplina', field: 'trainingResult.discipline.id', lookup: this.createDisciplinesLookup(disciplines) },
+                    { title: 'Czas trwania', field: 'trainingResult.duration', type:'numeric' },
                 ]}
                 data={trainings}
                 editable={{
@@ -153,14 +166,18 @@ const mapStateToProps = state => ({
     addTrainingSuccess: addTrainingSuccess(state),
     editTrainingError: editTrainingError(state),
     editTrainingPending: editTrainingPending(state),
-    editTrainingSuccess: editTrainingSuccess(state)
+    editTrainingSuccess: editTrainingSuccess(state),
+    disciplines: getDisciplines(state),
+    disciplinesError: getDisciplinesError(state),
+    disciplinesPending: getDisciplinesPending(state)
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     fetchTrainings: fetchTrainings,
     deleteTraining: deleteTraining,
     addTraining: addTraining,
-    editTraining: editTraining
+    editTraining: editTraining,
+    fetchDisciplines: fetchDisciplines
 }, dispatch)
 
 export default connect(
