@@ -1,0 +1,62 @@
+﻿.sport {
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100px;
+    width: 100px;
+    margin-right: 35px;
+}
+
+.bottom-spacing-big {
+    margin-bottom: 35px;
+}
+
+.bottom-spacing-medium {
+    margin-bottom: 20px;
+}
+
+.bottom-spacing-small {
+    margin-bottom: 10px;
+}
+
+.top-spacing-big {
+    margin-top: 35px;
+}
+
+.top-spacing-medium {
+    margin-top: 20px;
+}
+
+.top-spacing-small {
+    margin-top: 10px;
+}
+
+.link {
+    cursor: pointer;
+    color: #dc3545;
+    padding-bottom: 2px;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.react-datepicker-wrapper {
+    display: block !important;
+}
+
+@media screen and (max-width: 1000px) {
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .row-cards {
+        display: block;
+    }
+
+    .sport {
+        height: 50px;
+        width: 50px;
+        margin-right: 15px;
+    }
+}
