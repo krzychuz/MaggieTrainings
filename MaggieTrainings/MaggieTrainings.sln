@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaggieTrainings.Web", "Challenger.Web\MaggieTrainings.Web.csproj", "{A704A14D-3946-4250-A6A9-1230873AB855}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaggieTrainings.Web", "MaggieTrainings.Web\MaggieTrainings.Web.csproj", "{A704A14D-3946-4250-A6A9-1230873AB855}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaggieTrainings.Migration", "MaggieTrainings.Migration\MaggieTrainings.Migration.csproj", "{4AB1E5B3-9D24-46DE-A8EA-A771ECC5B19B}"
 EndProject

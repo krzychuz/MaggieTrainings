@@ -1,5 +1,6 @@
 ﻿using LiteDB;
-using MaggieTrainings.Web.Models;
+using MaggieTrainings.Domain.LegacyModels;
+using MaggieTrainings.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
