@@ -40,18 +40,12 @@ export function deleteTraining(id) {
 }
 
 export function addTraining(training) {
-
-    var trainingData = new FormData();
-    trainingData.append("DisciplineName", training.discipline);
-    trainingData.append("TrainingDuration", training.duration);
-    trainingData.append("TrainingDate", training.date);
-
     return dispatch => {
         dispatch(addTrainingPending())
         fetch(`api/trainings`, {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
-            body: JSON.stringify(trainingData)
+            body: JSON.stringify(training)
         })
             .then(() => {
                 dispatch(addTrainingSuccess());
@@ -66,16 +60,12 @@ export function addTraining(training) {
 
 export function editTraining(training) {
 
-    var trainingData = new FormData();
-    trainingData.append("DisciplineName", training.discipline);
-    trainingData.append("TrainingDuration", training.duration);
-    trainingData.append("TrainingDate", training.date);
-
     return dispatch => {
         dispatch(editTrainingPending())
         fetch(`api/trainings/${training.id}`, {
             method: 'PUT',
-            body: trainingData
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(training)
         })
             .then(() => {
                 dispatch(editTrainingSuccess());

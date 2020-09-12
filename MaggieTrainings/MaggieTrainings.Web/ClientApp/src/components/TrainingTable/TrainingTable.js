@@ -36,13 +36,18 @@ class TrainingTable extends Component {
     async handleAddTraining(training) {
         const { addTraining } = this.props;
 
-        var trainingData = {
-            discipline: training.trainingResult.disciplineName,
-            duration: training.trainingResult.trainingDuration,
-            date: training.addDate.toLocaleDateString("pl-PL")
-        }
+        var trainingRequest = {
+            trainingResult: {
+                discipline: {
+                    id: 999,
+                    description: training.trainingResult.discipline.description
+                },
+                duration: training.trainingResult.duration,
+                date: training.trainingResult.date
+            }
+        };              
 
-        addTraining(trainingData);
+        addTraining(trainingRequest);
     }
 
     async handleDeleteTraining(training) {
@@ -54,14 +59,19 @@ class TrainingTable extends Component {
     async handleEditTraining(training) {
         const { editTraining } = this.props;
 
-        var trainingData = {
+        var trainingRequest = {
             id: training.id,
-            discipline: training.trainingResult.disciplineName,
-            duration: training.trainingResult.trainingDuration,
-            date: training.addDate
-        }
+            trainingResult: {
+                discipline: {
+                    id: 999,
+                    description: training.trainingResult.discipline.description
+                },
+                duration: training.trainingResult.duration,
+                date: training.trainingResult.date
+            }
+        };  
 
-        editTraining(trainingData);
+        editTraining(trainingRequest);
     }
 
     render() {
@@ -80,7 +90,7 @@ class TrainingTable extends Component {
             <MaterialTable
                 title="Ostatnie treningi"
                 columns={[
-                    { title: 'Data', field: 'addDate', type: 'date' },
+                    { title: 'Data', field: 'trainingResult.date', type: 'date' },
                     { title: 'Dyscyplina', field: 'trainingResult.discipline.description' },
                     { title: 'Czas trwania', field: 'trainingResult.duration' },
                 ]}
