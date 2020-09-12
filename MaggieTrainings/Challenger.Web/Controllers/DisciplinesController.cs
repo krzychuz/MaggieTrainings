@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
-using MaggieTrainings.Web.DataRespository;
+using MaggieTrainings.Web.DataRespository.Generics;
 using MaggieTrainings.Web.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MaggieTrainings.Web.Controllers
@@ -14,11 +12,11 @@ namespace MaggieTrainings.Web.Controllers
     [ApiController]
     public class DisciplinesController : ControllerBase
     {
-        private readonly IDisciplinesRepository disciplinesRepository;
+        private readonly IGenericRepository<TrainingDiscipline> disciplinesRepository;
 
-        public DisciplinesController(IDisciplinesRepository disciplinesRepository)
+        public DisciplinesController(IUnitOfWork unitOfWork)
         {
-            this.disciplinesRepository = disciplinesRepository;
+            this.disciplinesRepository = unitOfWork.Repository<TrainingDiscipline>();
         }
 
         [HttpGet]
@@ -30,7 +28,7 @@ namespace MaggieTrainings.Web.Controllers
         [HttpGet("{id}", Name = "Get")]
         public async Task<ActionResult<TrainingDiscipline>> Get(int id)
         {
-            var trainingItem = disciplinesRepository.Get(id);
+            var trainingItem = disciplinesRepository.GetById(id);
 
             if (trainingItem is null)
                 return NotFound();
@@ -41,7 +39,7 @@ namespace MaggieTrainings.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] TrainingDiscipline trainingDiscipline)
         {
-            disciplinesRepository.Add(trainingDiscipline);
+            disciplinesRepository.Insert(trainingDiscipline);
             return StatusCode(201);
         }
 
@@ -53,14 +51,14 @@ namespace MaggieTrainings.Web.Controllers
                 return BadRequest();
             }
 
-            var trainingItem = disciplinesRepository.Get(id);
+            var trainingItem = disciplinesRepository.GetById(id);
 
             if (trainingItem is null)
                 return NotFound();
 
             trainingItem.Description = trainingDiscipline.Description;
 
-            disciplinesRepository.Update(trainingItem);
+            disciplinesRepository.Edit(trainingItem);
 
             return NoContent();
         }
@@ -68,12 +66,12 @@ namespace MaggieTrainings.Web.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var trainingItem = disciplinesRepository.Get(id);
+            var trainingItem = disciplinesRepository.GetById(id);
 
             if (trainingItem == null)
                 return NotFound();
 
-            disciplinesRepository.Remove(id);
+            disciplinesRepository.Delete(id);
 
             return NoContent();
         }
