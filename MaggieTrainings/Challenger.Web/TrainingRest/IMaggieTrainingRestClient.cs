@@ -16,6 +16,8 @@ namespace MaggieTrainings.Web.TrainingRest
 
         void DeleteTraining(int id);
 
+        void EditTraining(int id, TrainingResult trainingResult);
+
         DashboardData GetDashboardData();
     }
 }

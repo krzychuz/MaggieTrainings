@@ -24,7 +24,7 @@ export class Trainings extends PureComponent {
                     <TrainingProgressBar />
                 </div>
 
-                <div>
+                <div className="top-spacing-medium">
                     &nbsp;
                     <TrainingTable />
                 </div>

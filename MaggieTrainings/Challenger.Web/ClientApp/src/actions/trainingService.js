@@ -2,6 +2,7 @@ import { fetchTrainingsError, fetchTrainingsSuccess, fetchTrainingsPending } fro
 import { fetchDashboardDataError, fetchDashboardDataSuccess, fetchDashboardDataPending } from './training';
 import { deleteTrainingPending, deleteTrainingError, deleteTrainingSuccess } from './training'
 import { addTrainingPending, addTrainingSuccess, addTrainingError } from './training';
+import { editTrainingPending, editTrainingSuccess, editTrainingError } from './training';
 
 export function fetchTrainings() {
     return dispatch => {
@@ -49,7 +50,8 @@ export function addTraining(training) {
         dispatch(addTrainingPending())
         fetch(`api/trainings`, {
             method: 'POST',
-            body: trainingData
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(trainingData)
         })
             .then(() => {
                 dispatch(addTrainingSuccess());
@@ -58,6 +60,30 @@ export function addTraining(training) {
             })
             .catch(error => {
                 dispatch(addTrainingError(error));
+            })
+    }
+}
+
+export function editTraining(training) {
+
+    var trainingData = new FormData();
+    trainingData.append("DisciplineName", training.discipline);
+    trainingData.append("TrainingDuration", training.duration);
+    trainingData.append("TrainingDate", training.date);
+
+    return dispatch => {
+        dispatch(editTrainingPending())
+        fetch(`api/trainings/${training.id}`, {
+            method: 'PUT',
+            body: trainingData
+        })
+            .then(() => {
+                dispatch(editTrainingSuccess());
+                dispatch(fetchTrainings());
+                dispatch(fetchDashboardData());
+            })
+            .catch(error => {
+                dispatch(editTrainingError(error));
             })
     }
 }

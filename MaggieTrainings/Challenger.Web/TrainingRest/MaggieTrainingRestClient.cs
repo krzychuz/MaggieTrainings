@@ -25,7 +25,7 @@ namespace MaggieTrainings.Web.TrainingRest
                 // I should pass pl-PL as CurrentCulture
 
                 AddDate = trainingResult.TrainingDate,
-                EditDate = DateTime.Now.ToString("f"),
+                EditDate = DateTime.UtcNow.ToString("f"),
                 TrainingResult = trainingResult
             };
             trainingRepository.Add(newTraining);
@@ -80,6 +80,16 @@ namespace MaggieTrainings.Web.TrainingRest
         public Training GetTraining(int id)
         {
             return trainingRepository.Get(id);
+        }
+
+        public void EditTraining(int id, TrainingResult trainingResult)
+        {
+            var training = GetTraining(id);
+
+            training.EditDate = DateTime.UtcNow.ToString("f");
+            training.TrainingResult = trainingResult;
+
+            trainingRepository.Update(training);
         }
     }
 }

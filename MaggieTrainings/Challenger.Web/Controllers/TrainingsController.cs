@@ -42,6 +42,13 @@ namespace MaggieTrainings.Web.Controllers
             return Ok();
         }
 
+        [HttpPut("{id}")]
+        public IActionResult UpdateTraining([FromForm]TrainingResult trainingResult, int id)
+        {
+            maggieTrainingRestClient.EditTraining(id, trainingResult);
+            return Ok();
+        }
+
         [HttpGet]
         public ActionResult<IList<Training>> GetAllTrainings()
         {

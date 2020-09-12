@@ -1,7 +1,8 @@
 import { FETCH_TRAININGS_PENDING, FETCH_TRAININGS_SUCCESS, FETCH_TRAININGS_ERROR } from '../actions/training';
 import { FETCH_DASHBOARD_DATA_PENDING, FETCH_DASHBOARD_DATA_SUCCESS, FETCH_DASHBOARD_DATA_ERROR } from '../actions/training';
 import { DELETE_TRAINING_ERROR, DELETE_TRAINING_SUCCESS, DELETE_TRAINING_PENDING } from '../actions/training';
-import { ADD_TRAINING_ERROR, ADD_TRAINING_SUCCESS, ADD_TRAINING_PENDING} from '../actions/training';
+import { ADD_TRAINING_ERROR, ADD_TRAINING_SUCCESS, ADD_TRAINING_PENDING } from '../actions/training';
+import { EDIT_TRAINING_ERROR, EDIT_TRAINING_SUCCESS, EDIT_TRAINING_PENDING } from '../actions/training';
 
 export const initialState = {
     trainingsPending: false,
@@ -16,7 +17,10 @@ export const initialState = {
     deleteTrainingError: null,
 
     addTrainingPending: false,
-    addTrainingError: null
+    addTrainingError: null,
+
+    editTrainingPending: false,
+    editTrainingError: null
 }
 
 export function trainingsReducer(state = initialState, action) {
@@ -58,6 +62,7 @@ export function trainingsReducer(state = initialState, action) {
                 deleteTrainingError: action.error
             }
 
+        // Add training
         case ADD_TRAINING_PENDING:
             return {
                 ...state,
@@ -73,6 +78,24 @@ export function trainingsReducer(state = initialState, action) {
                 ...state,
                 addTrainingPending: false,
                 addTrainingError: action.error
+            }
+
+        // Edit training
+        case EDIT_TRAINING_PENDING:
+            return {
+                ...state,
+                editTrainingPending: true
+            }
+        case EDIT_TRAINING_SUCCESS:
+            return {
+                ...state,
+                editTrainingPending: false
+            }
+        case EDIT_TRAINING_ERROR:
+            return {
+                ...state,
+                editTrainingPending: false,
+                editTrainingError: action.error
             }
 
         // Fetch dashboard data
@@ -114,3 +137,7 @@ export const deleteTrainingError = state => state.trainingsReducer.deleteTrainin
 export const addTrainingSuccess = state => state.trainingsReducer.trainings;
 export const addTrainingPending = state => state.trainingsReducer.addTrainingPending;
 export const addTrainingError = state => state.trainingsReducer.addTrainingError;
+
+export const editTrainingSuccess = state => state.trainingsReducer.trainings;
+export const editTrainingPending = state => state.trainingsReducer.editTrainingPending;
+export const editTrainingError = state => state.trainingsReducer.editTrainingError;

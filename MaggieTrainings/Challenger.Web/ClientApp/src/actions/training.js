@@ -14,6 +14,10 @@ export const ADD_TRAINING_PENDING = 'ADD_TRAINING_PENDING';
 export const ADD_TRAINING_SUCCESS = 'ADD_TRAINING_SUCCESS';
 export const ADD_TRAINING_ERROR = 'ADD_TRAINING_ERROR';
 
+export const EDIT_TRAINING_PENDING = 'EDIT_TRAINING_PENDING';
+export const EDIT_TRAINING_SUCCESS = 'EDIT_TRAINING_SUCCESS';
+export const EDIT_TRAINING_ERROR = 'EDIT_TRAINING_ERROR';
+
 export function fetchTrainingsPending() {
     return {
         type: FETCH_TRAININGS_PENDING
@@ -88,6 +92,25 @@ export function fetchDashboardDataSuccess(trainings) {
 export function fetchDashboardDataError(error) {
     return {
         type: FETCH_DASHBOARD_DATA_ERROR,
+        error: error
+    }
+}
+
+export function editTrainingSuccess() {
+    return {
+        type: EDIT_TRAINING_SUCCESS
+    }
+}
+
+export function editTrainingPending() {
+    return {
+        type: EDIT_TRAINING_PENDING
+    }
+}
+
+export function editTrainingError(error) {
+    return {
+        type: EDIT_TRAINING_ERROR,
         error: error
     }
 }
