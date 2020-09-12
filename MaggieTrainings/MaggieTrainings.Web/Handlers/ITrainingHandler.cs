@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using MaggieTrainings.Domain.Models;
 using MaggieTrainings.Domain.Models.Data;
 
-namespace MaggieTrainings.Web.TrainingRest
+namespace MaggieTrainings.Web.Handlers
 {
     public interface ITrainingHandler
     {

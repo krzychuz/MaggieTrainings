@@ -24,13 +24,13 @@ namespace MaggieTrainings.Web.Controllers
             _mapper = mapper;        }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TrainingDisciplineResponse>>> GetAll()
+        public ActionResult<IEnumerable<TrainingDisciplineResponse>> GetAll()
         {
             return Ok(_disciplinesRepository.GetAll());
         }
 
         [HttpGet("{id}", Name = "Get")]
-        public async Task<ActionResult<TrainingDisciplineResponse>> Get(int id)
+        public ActionResult<TrainingDisciplineResponse> Get(int id)
         {
             var trainingItem = _disciplinesRepository.GetById(id);
 
@@ -41,7 +41,7 @@ namespace MaggieTrainings.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] TrainingDisciplineRequest trainingDisciplineRequest)
+        public ActionResult Post([FromBody] TrainingDisciplineRequest trainingDisciplineRequest)
         {
             var trainingDiscipline = _mapper.Map<TrainingDiscipline>(trainingDisciplineRequest);
             _disciplinesRepository.Insert(trainingDiscipline);
@@ -49,7 +49,7 @@ namespace MaggieTrainings.Web.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, [FromBody] TrainingDisciplineRequest trainingDisciplineRequest)
+        public ActionResult Put(int id, [FromBody] TrainingDisciplineRequest trainingDisciplineRequest)
         {
             var trainingDiscipline = _mapper.Map<TrainingDiscipline>(trainingDisciplineRequest);
 
@@ -69,7 +69,7 @@ namespace MaggieTrainings.Web.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public ActionResult Delete(int id)
         {
             var trainingItem = _disciplinesRepository.GetById(id);
 

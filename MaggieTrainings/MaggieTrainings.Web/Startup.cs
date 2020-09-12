@@ -1,7 +1,7 @@
 using AutoMapper;
 using MaggieTrainings.Web.DataRespository.Generics;
 using MaggieTrainings.Web.Extensions;
-using MaggieTrainings.Web.TrainingRest;
+using MaggieTrainings.Web.Handlers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;

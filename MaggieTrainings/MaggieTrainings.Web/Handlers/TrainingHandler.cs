@@ -5,7 +5,7 @@ using System.Linq;
 using MaggieTrainings.Web.DataRespository.Generics;
 using MaggieTrainings.Domain.Models.Data;
 
-namespace MaggieTrainings.Web.TrainingRest
+namespace MaggieTrainings.Web.Handlers
 {
     public class TrainingHandler : ITrainingHandler
     {
@@ -38,17 +38,14 @@ namespace MaggieTrainings.Web.TrainingRest
 
         public DashboardData GetDashboardData()
         {
-            // TODO - Think if we can performance here
-
             List<Training> allTrainings = new List<Training>(trainingsRepository.GetAll());
 
             var dashBoardData = new DashboardData
             {
                 NumberOfTrainings = allTrainings.Count,
                 LastTraining = allTrainings.OrderBy(training => training.TrainingResult.Date).Last().TrainingResult.Date,
+                IsYearlyGoalAchieved = allTrainings.Count >= 100
             };
-
-            dashBoardData.IsYearlyGoalAchieved = dashBoardData.NumberOfTrainings >= 100;
 
             return dashBoardData;
         }

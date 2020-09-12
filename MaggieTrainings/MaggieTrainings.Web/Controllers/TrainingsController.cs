@@ -2,7 +2,7 @@
 using MaggieTrainings.Domain.Models.Data;
 using MaggieTrainings.Domain.Models.Requests;
 using MaggieTrainings.Domain.Models.Responses;
-using MaggieTrainings.Web.TrainingRest;
+using MaggieTrainings.Web.Handlers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

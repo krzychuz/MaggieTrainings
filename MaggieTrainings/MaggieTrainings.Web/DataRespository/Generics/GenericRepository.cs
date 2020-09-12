@@ -9,12 +9,11 @@ namespace MaggieTrainings.Web.DataRespository.Generics
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class, new()
     {
-        private readonly LiteDatabase context;
+
         private readonly LiteCollection<T> dbSet;
 
         public GenericRepository(LiteDatabase context)
         {
-            this.context = context;
             dbSet = context.GetCollection<T>(typeof(T).Name);
         }
 
@@ -52,6 +51,11 @@ namespace MaggieTrainings.Web.DataRespository.Generics
         public void DeleteAll()
         {
             dbSet.Delete(arg => true);
+        }
+
+        public int Count()
+        {
+            return dbSet.Count();
         }
 
     }

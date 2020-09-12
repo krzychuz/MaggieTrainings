@@ -19,5 +19,7 @@ namespace MaggieTrainings.Web.DataRespository.Generics
         void Delete(object id);
 
         void DeleteAll();
+
+        int Count();
     }
 }
