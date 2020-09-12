@@ -11,7 +11,6 @@ namespace MaggieTrainings.Web.TrainingRest
 {
     public class TrainingHandler : ITrainingHandler
     {
-        private readonly IUnitOfWork unitOfWork;
         private readonly IGenericRepository<Training> trainingsRepository;
 
         public TrainingHandler(IUnitOfWork unitOfWork)

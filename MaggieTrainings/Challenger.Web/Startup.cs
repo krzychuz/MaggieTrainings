@@ -33,6 +33,7 @@ namespace MaggieTrainings.Web
             });
 
             services.AddOptions();
+
             services.AddScoped<ITrainingHandler, TrainingHandler>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

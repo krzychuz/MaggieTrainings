@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaggieTrainings.Web", "Challenger.Web\MaggieTrainings.Web.csproj", "{A704A14D-3946-4250-A6A9-1230873AB855}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaggieTrainings.Migration", "MaggieTrainings.Migration\MaggieTrainings.Migration.csproj", "{4AB1E5B3-9D24-46DE-A8EA-A771ECC5B19B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaggieTrainings.Domain", "MaggieTrainings.Domain\MaggieTrainings.Domain.csproj", "{0D9AF13A-B78D-46B6-80C2-E1BEDCADC6D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{A704A14D-3946-4250-A6A9-1230873AB855}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A704A14D-3946-4250-A6A9-1230873AB855}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A704A14D-3946-4250-A6A9-1230873AB855}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AB1E5B3-9D24-46DE-A8EA-A771ECC5B19B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AB1E5B3-9D24-46DE-A8EA-A771ECC5B19B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AB1E5B3-9D24-46DE-A8EA-A771ECC5B19B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AB1E5B3-9D24-46DE-A8EA-A771ECC5B19B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D9AF13A-B78D-46B6-80C2-E1BEDCADC6D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D9AF13A-B78D-46B6-80C2-E1BEDCADC6D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D9AF13A-B78D-46B6-80C2-E1BEDCADC6D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D9AF13A-B78D-46B6-80C2-E1BEDCADC6D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
