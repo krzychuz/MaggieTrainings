@@ -12,9 +12,9 @@ namespace MaggieTrainings.Web.DataRespository.Generics
         private readonly LiteDatabase context;
         private readonly Dictionary<Type, object> repositories = new Dictionary<Type, object>();
 
-        public UnitOfWork(IHostingEnvironment hostingEnvironment)
+        public UnitOfWork(IWebHostEnvironment hostingEnvironment)
         {
-            context = new LiteDatabase(hostingEnvironment.ContentRootPath + "\\MaggieTrainings.db");
+            context = new LiteDatabase($"Filename={hostingEnvironment.ContentRootPath}/MaggieTrainings.db; Upgrade=true");
         }
 
         public void Save()

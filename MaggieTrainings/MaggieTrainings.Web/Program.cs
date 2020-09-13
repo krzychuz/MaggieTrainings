@@ -21,6 +21,7 @@ namespace MaggieTrainings.Web
       WebHost.CreateDefaultBuilder(args)
         .UseIISIntegration()
         .UseKestrel()
+        .UseContentRoot(Directory.GetCurrentDirectory())
         .UseStartup<Startup>();
   }
 }

@@ -40,6 +40,9 @@ namespace MaggieTrainings.Web.Handlers
         {
             List<Training> allTrainings = new List<Training>(trainingsRepository.GetAll());
 
+            if (!allTrainings.Any())
+                return new DashboardData();
+
             var dashBoardData = new DashboardData
             {
                 NumberOfTrainings = allTrainings.Count,
