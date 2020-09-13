@@ -52,7 +52,7 @@ class TrainingTable extends Component {
         var trainingRequest = {
             trainingResult: {
                 discipline: {
-                    id: training.trainingResult.discipline.id,
+                    id: parseInt(training.trainingResult.discipline.id),
                     description: training.trainingResult.discipline.description
                 },
                 duration: training.trainingResult.duration,
@@ -76,7 +76,7 @@ class TrainingTable extends Component {
             id: training.id,
             trainingResult: {
                 discipline: {
-                    id: training.trainingResult.discipline.id,
+                    id: parseInt(training.trainingResult.discipline.id),
                     description: training.trainingResult.discipline.description
                 },
                 duration: training.trainingResult.duration,
