@@ -9,11 +9,11 @@ namespace MaggieTrainings.Web.DataRespository
 {
     public class TrainingRepository : ITrainingRepository, IDisposable
     {
-        private readonly IHostingEnvironment environment;
-        private readonly LiteDatabase dB;
-        private readonly LiteCollection<Training> trainingsCollection;
+        private readonly IWebHostEnvironment environment;
+        private readonly ILiteDatabase dB;
+        private readonly ILiteCollection<Training> trainingsCollection;
 
-        public TrainingRepository(IHostingEnvironment hostingEnvironment)
+        public TrainingRepository(IWebHostEnvironment hostingEnvironment)
         {
             environment = hostingEnvironment;
             dB = new LiteDatabase(GetLiteDbPath());
